@@ -76,13 +76,14 @@ if ($role == 1) {
                         <th></th>
                         <th></th>
                         <th></th>
-                        <th  {{$role == 1 ? 'hidden' : ''}}><a class="btn btn-info btn-sm"
-                               href="{{--{{ route("admin.product.edit",  $value -> maSV ) }}--}}">
+                        <th></th>
+                        <th {{$role == 1 ? 'hidden' : ''}}><a class="btn btn-info btn-sm"
+                                                              href="{{--{{ route("admin.product.edit",  $value -> maSV ) }}--}}">
                                 Duyệt tất cả
                             </a></th>
                         <th></th>
                         <th {{$role == 2 ? 'hidden' : ''}}><a class="btn btn-info btn-sm"
-                               href="{{--{{ route("admin.product.edit",  $value -> maSV ) }}--}}">
+                                                              href="{{--{{ route("admin.product.edit",  $value -> maSV ) }}--}}">
                                 Duyệt tất cả
                             </a></th>
                         <th></th>
@@ -92,24 +93,7 @@ if ($role == 1) {
                         <th>STT</th>
                         <th>Mã SV</th>
                         <th>Họ và tên</th>
-                        {{--                        <th>--}}
-                        {{--                            <select style="border: none; font-weight: bold" onchange="sortCate_Product()"--}}
-                        {{--                                    class="font-weight-bold" id="sortCate_Pr">--}}
-                        {{--                                <option value="">Danh mục</option>--}}
-                        {{--                                @foreach($list_cate as $key => $value )--}}
-                        {{--                                    <option value="{{ $value -> TenDM }}">{{ $value -> TenDM }}</option>--}}
-                        {{--                                @endforeach--}}
-                        {{--                            </select>--}}
-                        {{--                        </th>--}}
-                        {{--                        <th>--}}
-                        {{--                            <select style="border: none; font-weight: bold" onchange="sortBrand_Product()"--}}
-                        {{--                                    class="font-weight-bold" id="sortBrand_Pr">--}}
-                        {{--                                <option value="">Thương hiệu</option>--}}
-                        {{--                                @foreach($list_brand as $key => $value )--}}
-                        {{--                                    <option value="{{ $value -> TenLSP }}">{{ $value -> TenLSP }}</option>--}}
-                        {{--                                @endforeach--}}
-                        {{--                            </select>--}}
-                        {{--                        </th>--}}
+                        <th {{$role == 2 ? 'hidden' : ''}}>Lớp</th>
                         <th>Số điện thoại</th>
                         <th>Quê quán</th>
                         <th class="text-right">SVTĐG</th>
@@ -134,35 +118,19 @@ if ($role == 1) {
                     @foreach($listScore as $key => $value)
 
                         <tr>
-
-                            {{--                            <td>--}}
-                            {{--                                <ul class="list-inline">--}}
-                            {{--                                    <li class="list-inline-item">--}}
-                            {{--                                        <img alt="Avatar" class="concac"--}}
-                            {{--                                             src="{{ asset('public/backend/'. $value -> HinhAnh1) }}">--}}
-                            {{--                                    </li>--}}
-                            {{--                                    <li class="list-inline-item">--}}
-                            {{--                                        <img alt="Avatar" class="concac"--}}
-                            {{--                                             src="{{ asset('public/backend/'. $value -> HinhAnh2) }}">--}}
-                            {{--                                    </li>--}}
-                            {{--                                    <li class="list-inline-item">--}}
-                            {{--                                        <img alt="Avatar" class="concac"--}}
-                            {{--                                             src="{{ asset('public/backend/'. $value -> HinhAnh3) }}">--}}
-                            {{--                                    </li>--}}
-                            {{--                                </ul>--}}
-                            {{--                            </td>--}}
-
                             <td> <?php $i++;
                                 echo $i
                                 ?></td>
                             <td>{{ $value -> maND }}</td>
                             <td>{{ $value -> tenSV }}</td>
+                            <td {{$role == 2 ? 'hidden' : ''}}>{{ $value -> lopID }}</td>
                             <td>{{ $value -> sodienthoai }}</td>
                             <td>{{ $value -> quequan }}</td>
 
                             <td class="text-right">{{ $value -> diemTDG }} </td>
-                            <td {{$role == 1 ? 'hidden' : ''}}><a class="btn btn-info btn-sm {{ ($value -> diemTDG) == null ? 'disabled' : '' }}"
-                                   href="{{ route("chamdiemrenluyen.viewScore.duyet", $value -> maND,$value -> diemTDG) }}">
+                            <td {{$role == 1 ? 'hidden' : ''}}><a
+                                    class="btn btn-info btn-sm {{ ($value -> diemTDG) == null ? 'disabled' : '' }}"
+                                    href="{{ route("chamdiemrenluyen.viewScore.duyet", $value -> maND,$value -> diemTDG) }}">
                                     Duyệt
                                 </a></td>
                             {{--                            <td class="">--}}

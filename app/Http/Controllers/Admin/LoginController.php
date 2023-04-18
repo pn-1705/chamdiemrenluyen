@@ -47,16 +47,30 @@ class LoginController extends Controller
                     Session::put('khoaID', $result->khoaID);
                     //dd($result->lopID);
                 } else {
-                    $result = DB::table('nguoidung')
-                        ->join('giaovien', 'nguoidung.maND', '=', 'giaovien.maND')
-                        ->where('giaovien.maND', $maND)
-                        ->first();
-                    Session::put('ten', $result->ten);
-                    Session::put('khoaID', $result->khoaID);
-                    $tenKhoa = DB::table('khoa')
-                        ->where('maKhoa', '=', $result->khoaID)
-                        ->get('tenKhoa')->first()->tenKhoa;
-                    Session::put('tenKhoa', $tenKhoa);
+                    if ($result->role == 1) {
+                        $result = DB::table('nguoidung')
+                            ->join('giaovien', 'nguoidung.maND', '=', 'giaovien.maND')
+                            ->where('giaovien.maND', $maND)
+                            ->first();
+                        Session::put('ten', $result->ten);
+                        Session::put('khoaID', $result->khoaID);
+                        $tenKhoa = DB::table('khoa')
+                            ->where('maKhoa', '=', $result->khoaID)
+                            ->get('tenKhoa')->first()->tenKhoa;
+                        Session::put('tenKhoa', $tenKhoa);
+                    } else {
+                        $result = DB::table('nguoidung')
+                            ->join('giaovien', 'nguoidung.maND', '=', 'giaovien.maND')
+                            ->where('giaovien.maND', $maND)
+                            ->first();
+                        Session::put('ten', $result->ten);
+                        //Session::put('khoaID', $result->khoaID);
+//                        $tenKhoa = DB::table('khoa')
+//                            ->where('maKhoa', '=', $result->khoaID)
+//                            ->get('tenKhoa')->first()->tenKhoa;
+//                        Session::put('tenKhoa', $tenKhoa);
+                    }
+
 
                 }
             }

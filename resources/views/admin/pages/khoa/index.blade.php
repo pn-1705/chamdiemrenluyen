@@ -26,12 +26,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="d-inline-block d-flex">
-            <div>
-                <form class="form-inline" id="form_input">
-                    <input class="form-control" name="product" type="text" placeholder="Nhập sinh viên cần tìm...">
-                    <button class="btn-outline-dark btn" type="submit"><i class="fa fa-search"></i></button>
-                </form>
-            </div>
+
         </div>
         <!-- Default box -->
         <div class="card">
@@ -56,40 +51,45 @@
                 <table class="table table-striped projects">
                     <thead>
                     <tr>
+                        <th colspan="2">
+                            <div>
+                                <form action="{{route('chamdiemrenluyen.qlsv.search')}}" class="form-inline"
+                                      method="GET">
+                                    @csrf
+                                    <input value="@if(isset($id)){{$id}} @endif" class="form-control" name="student" type="text"
+                                           placeholder="Nhập sinh viên cần tìm...">
+                                    <button class="form-control btn-outline-dark btn" type="submit"><i
+                                            class="fa fa-search"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </th>
+                        <th></th>
+                        <th>
+                            <select class="form-control" name="lopid" id="">
+                                <option value="">Lớp</option>
+                                @foreach($listClass as $key => $value)
+                                    <option value="{{$value->maLop}}">{{$value->maLop}}</option>
+                                @endforeach
+                            </select>
+                        </th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    <tr>
                         <th>STT</th>
                         <th>Mã SV</th>
                         <th>Họ và tên</th>
                         <th>Lớp</th>
-                        {{--                        <th>--}}
-                        {{--                            <select style="border: none; font-weight: bold" onchange="sortCate_Product()"--}}
-                        {{--                                    class="font-weight-bold" id="sortCate_Pr">--}}
-                        {{--                                <option value="">Danh mục</option>--}}
-                        {{--                                @foreach($list_cate as $key => $value )--}}
-                        {{--                                    <option value="{{ $value -> TenDM }}">{{ $value -> TenDM }}</option>--}}
-                        {{--                                @endforeach--}}
-                        {{--                            </select>--}}
-                        {{--                        </th>--}}
-                        {{--                        <th>--}}
-                        {{--                            <select style="border: none; font-weight: bold" onchange="sortBrand_Product()"--}}
-                        {{--                                    class="font-weight-bold" id="sortBrand_Pr">--}}
-                        {{--                                <option value="">Thương hiệu</option>--}}
-                        {{--                                @foreach($list_brand as $key => $value )--}}
-                        {{--                                    <option value="{{ $value -> TenLSP }}">{{ $value -> TenLSP }}</option>--}}
-                        {{--                                @endforeach--}}
-                        {{--                            </select>--}}
-                        {{--                        </th>--}}
+                        <th>Ngành</th>
                         <th>Năm sinh</th>
                         <th>Quê quán</th>
                         <th>SĐT</th>
                         <th>Giới tính</th>
-                        {{--                        <th>--}}
-                        {{--                            <select onchange="sortStatus_Product()" class="font-weight-bold" style="border: none; "--}}
-                        {{--                                    name="" id="sortStatus_Pr">--}}
-                        {{--                                <option value="">Trạng thái</option>--}}
-                        {{--                                <option value="Ẩn">Ẩn</option>--}}
-                        {{--                                <option value="Hiện">Hiện</option>--}}
-                        {{--                            </select>--}}
-                        {{--                        </th>--}}
                         <th>
                         </th>
                     </tr>
@@ -100,28 +100,12 @@
                     @foreach($listStudent as $key => $value)
 
                         <tr>
-
-                            {{--                            <td>--}}
-                            {{--                                <ul class="list-inline">--}}
-                            {{--                                    <li class="list-inline-item">--}}
-                            {{--                                        <img alt="Avatar" class="concac"--}}
-                            {{--                                             src="{{ asset('public/backend/'. $value -> HinhAnh1) }}">--}}
-                            {{--                                    </li>--}}
-                            {{--                                    <li class="list-inline-item">--}}
-                            {{--                                        <img alt="Avatar" class="concac"--}}
-                            {{--                                             src="{{ asset('public/backend/'. $value -> HinhAnh2) }}">--}}
-                            {{--                                    </li>--}}
-                            {{--                                    <li class="list-inline-item">--}}
-                            {{--                                        <img alt="Avatar" class="concac"--}}
-                            {{--                                             src="{{ asset('public/backend/'. $value -> HinhAnh3) }}">--}}
-                            {{--                                    </li>--}}
-                            {{--                                </ul>--}}
-                            {{--                            </td>--}}
-                            <td><?php echo  $i++;
+                            <td><?php echo $i++;
                                 ?></td>
                             <td>{{ $value -> maSV }}</td>
                             <td>{{ $value -> tenSV }}</td>
                             <td>{{ $value -> lopID }}</td>
+                            <td>{{ $value -> nganh }}</td>
                             <td>{{ $value -> namsinh }}</td>
                             {{--                            <td class="">--}}
                             {{--                                {{ number_format(($value -> DonGia),0,',','.') }}--}}
@@ -131,17 +115,18 @@
                             <td>{{ $value ->quequan }}</td>
                             <td>{{ $value ->sodienthoai }}</td>
                             <td>{{ $value ->gioitinh }}</td>
-{{--                            <td class="project-state">--}}
-{{--                                @if($value -> TrangThai == 1)--}}
-{{--                                    <a href="{{ route("admin.product.active",  $value -> id ) }}"><span--}}
-{{--                                            class="badge badge-primary">Hiện</span></a>--}}
-{{--                                @else--}}
-{{--                                    <a href="{{ route("admin.product.active",  $value -> id ) }}"><span--}}
-{{--                                            class="badge badge-secondary">Ẩn</span></a>--}}
-{{--                                @endif--}}
-{{--                            </td>--}}
+                            {{--                            <td class="project-state">--}}
+                            {{--                                @if($value -> TrangThai == 1)--}}
+                            {{--                                    <a href="{{ route("admin.product.active",  $value -> id ) }}"><span--}}
+                            {{--                                            class="badge badge-primary">Hiện</span></a>--}}
+                            {{--                                @else--}}
+                            {{--                                    <a href="{{ route("admin.product.active",  $value -> id ) }}"><span--}}
+                            {{--                                            class="badge badge-secondary">Ẩn</span></a>--}}
+                            {{--                                @endif--}}
+                            {{--                            </td>--}}
                             <td class="project-actions text-right">
-                                <a class="btn btn-info btn-sm" href="{{ route("admin.product.edit",  $value -> maSV ) }}">
+                                <a class="btn btn-info btn-sm"
+                                   href="{{ route("admin.product.edit",  $value -> maSV ) }}">
                                     <i class="fas fa-pencil-alt">
                                     </i>
                                     Edit

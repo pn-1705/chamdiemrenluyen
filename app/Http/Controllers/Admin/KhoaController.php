@@ -15,13 +15,33 @@ class KhoaController extends Controller
     {
         $khoaID = Session('khoaID');
         //dd($khoaID);
+        $listClass = DB::table('lop')->where('maKhoa', $khoaID)->get();
         $listStudent = DB::table('sinhvien')
             ->join('lop', 'sinhvien.lopID', '=', 'lop.maLop')
             ->orderBy('sinhvien.maSV')
             ->get();
-        //dd($listStudent);
+        //dd($listClass);
 
         $dt['listStudent'] = $listStudent;
+        $dt['listClass'] = $listClass;
+        return view('admin.pages.khoa.index', $dt);
+    }
+
+    public function searchStudent(Request $request)
+    {
+        $khoaID = Session('khoaID');
+
+        $id = $request->student;
+        $listClass = DB::table('lop')->where('maKhoa', $khoaID)->get();
+        $listStudent = DB::table('sinhvien')
+            ->join('lop', 'sinhvien.lopID', '=', 'lop.maLop')
+            ->where('maSV', 'like', '%' . $id . '%')
+            ->orWhere('tenSV', 'like', '%' . $id . '%')
+            ->get();
+
+        $dt['listStudent'] = $listStudent;
+        $dt['listClass'] = $listClass;
+        $dt['id'] = $id;
         return view('admin.pages.khoa.index', $dt);
     }
 //    public function addUser()

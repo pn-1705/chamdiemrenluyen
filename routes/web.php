@@ -82,13 +82,17 @@ Route::group(['middleware' => 'checklogin'], function () {
 
     //Giáo viên
     Route::get('/viewScore', ['as' => 'chamdiemrenluyen.viewScore', 'uses' => 'Admin\GiaoVienController@viewScore']);
-    Route::post('/viewScore/hocki', ['as' => 'chamdiemrenluyen.viewScore.hocki', 'uses' => 'Admin\GiaoVienController@viewScoreHocKi']);
+    Route::post('/viewScore', ['as' => 'chamdiemrenluyen.viewScore.hocki', 'uses' => 'Admin\GiaoVienController@viewScoreHocKi']);
     Route::get('/viewScore/duyet/{maSV}', ['as' => 'chamdiemrenluyen.viewScore.duyet', 'uses' => 'Admin\GiaoVienController@duyetDRL']);
     Route::get('/viewScore/khoaduyet/{maSV}', ['as' => 'chamdiemrenluyen.viewScore.khoaduyet', 'uses' => 'Admin\GiaoVienController@khoaduyetDRL']);
 
 
     //khoa
     Route::get('/qlsv', ['as' => 'chamdiemrenluyen.qlsv', 'uses' => 'Admin\KhoaController@qlsv']);
+    Route::get('/qlsv/search', ['as' => 'chamdiemrenluyen.qlsv.search', 'uses' => 'Admin\KhoaController@searchStudent']);
+
+    //admin
+    Route::get('/khoa', ['as' => 'chamdiemrenluyen.khoa', 'uses' => 'Admin\AdminController@index']);
 
 });
 

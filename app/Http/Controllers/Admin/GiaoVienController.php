@@ -68,6 +68,7 @@ class GiaoVienController extends Controller
             ->where('hockiID', '=', $request->hockiID)
             ->leftJoin('bangdiem', 'sinhvien.maSV', '=', 'bangdiem.maSV')
             ->get();
+        //dd($listScore);
         $data['listScore'] = $listScore;
         $data['listHocKi'] = $listHocKi;
         Session::put('hk', $request->hockiID);
@@ -75,7 +76,7 @@ class GiaoVienController extends Controller
         return view('admin.pages.product.viewScore', $data);
     }
 
-    public function duyetDRL($maSV)
+    public function duyetDRL($maSV, Request $request)
     {
         $diemTDG = DB::table('bangdiem')
             ->where('maSV', '=', $maSV)
@@ -91,7 +92,19 @@ class GiaoVienController extends Controller
                     'diemLDG' => $value->diemTDG
                 ]);
         }
-        return redirect()->back()->with('duyet', 'Đã duyệt điểm rèn luyện cho SV: ' . $maSV);
+
+        $listHocKi = DB::table('hocki')->orderBy('id', 'desc')->get();
+        $lopID = Session('lopID');
+        $listScore = DB::table('sinhvien')
+            ->where('lopID', '=', $lopID)
+            ->where('hockiID', '=', $request->hockiID)
+            ->leftJoin('bangdiem', 'sinhvien.maSV', '=', 'bangdiem.maSV')
+            ->get();
+        //dd($listScore);
+        $data['listScore'] = $listScore;
+        $data['listHocKi'] = $listHocKi;
+        Session::put('hk', $request->hockiID);
+        return redirect()->back()->with($data)->with('duyet', 'Đã duyệt điểm rèn luyện cho SV: ' . $maSV);
     }
 
     public function khoaduyetDRL($maSV)

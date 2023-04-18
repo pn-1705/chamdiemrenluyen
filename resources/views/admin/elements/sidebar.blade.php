@@ -156,6 +156,17 @@
                         </p>
                     </a>
                 </li>
+                                <li class="nav-item" {{ Session::get('Quyen_id') == 0 ? '' : 'hidden' }}>
+                                    <a href="{{ route('chamdiemrenluyen.khoa') }}"
+                                       class="nav-link {{ Route::is('chamdiemrenluyen.khoa') ? 'active' : '' }}">
+                                        <i class="nav-icon far fa-id-card"></i>
+                                        <p class="text-uppercase">
+                                                                        <span class="badge badge-info right">
+                                                                            </span>
+                                            Khoa
+                                        </p>
+                                    </a>
+                                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
