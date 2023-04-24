@@ -89,17 +89,25 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
-                        <i class="nav-icon fas fa-calendar-times    "></i>
+                <li class="nav-item" {{ Session::get('Quyen_id') == 3 ? '' : 'hidden' }}>
+                    <a href="{{route('chamdiemrenluyen.TKB')}}" class="nav-link {{ Route::is('chamdiemrenluyen.TKB') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-calendar-times"></i>
                         <p class="text-uppercase">
                             Thời khóa biểu
                             <span class="right badge badge-danger">New</span>
                         </p>
                     </a>
                 </li>
-
-
+                <li class="nav-item" {{ Session::get('Quyen_id') == 2 ? '' : 'hidden' }}>
+                    <a href="{{route('chamdiemrenluyen.lecTKB')}}"
+                       class="nav-link {{ Route::is('chamdiemrenluyen.lecTKB') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-calendar-times"></i>
+                        <p class="text-uppercase">
+                            Thời khóa biểu
+                            <span class="right badge badge-danger">New</span>
+                        </p>
+                    </a>
+                </li>
                 <li class="nav-item" {{ Session::get('Quyen_id') == 2 ? '' : 'hidden' }}>
                     <a href="{{ route('chamdiemrenluyen.students')}}"
                        class="nav-link {{ Route::is('chamdiemrenluyen.students') ? 'active' : '' }}">
@@ -111,12 +119,30 @@
                     </a>
                 </li>
                 <li class="nav-item" {{ Session::get('Quyen_id') == 1 ? '' : 'hidden' }}>
+                    <a href="{{ route('chamdiemrenluyen.lop')}}"
+                       class="nav-link {{ Route::is('chamdiemrenluyen.lop') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-user-friends"></i>
+                        <p>
+                            LỚP
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item" {{ Session::get('Quyen_id') == 1 ? '' : 'hidden' }}>
                     <a href="{{ route('chamdiemrenluyen.qlsv')}}"
                        class="nav-link {{ Route::is('chamdiemrenluyen.qlsv') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-user-graduate"></i>
                         <p>
                             SINH VIÊN
                             <span class="right badge badge-primary">{{Session::get('lopID')}}</span>
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item" {{ Session::get('Quyen_id') == 1 ? '' : 'hidden' }}>
+                    <a href="{{ route('chamdiemrenluyen.giaovien')}}"
+                       class="nav-link {{ Route::is('chamdiemrenluyen.giaovien') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                        <p>
+                            GIÁO VIÊN
                         </p>
                     </a>
                 </li>
@@ -156,19 +182,64 @@
                         </p>
                     </a>
                 </li>
-                                <li class="nav-item" {{ Session::get('Quyen_id') == 0 ? '' : 'hidden' }}>
-                                    <a href="{{ route('chamdiemrenluyen.khoa') }}"
-                                       class="nav-link {{ Route::is('chamdiemrenluyen.khoa') ? 'active' : '' }}">
-                                        <i class="nav-icon far fa-id-card"></i>
-                                        <p class="text-uppercase">
-                                                                        <span class="badge badge-info right">
-                                                                            </span>
-                                            Khoa
-                                        </p>
-                                    </a>
-                                </li>
+                <li class="nav-item " {{ Session::get('Quyen_id') == 0 ? '' : 'hidden' }}>
+                    <a href="{{ route('chamdiemrenluyen.khoa') }}"
+                       class="nav-link {{ Route::is('chamdiemrenluyen.khoa') ? 'active' : '' }}">
+                        <i class="nav-icon far fa-star"></i>
+                        <p class="text-uppercase">
+                            Khoa
+                        </p>
+                    </a>
+                </li>
             </ul>
         </nav>
+        <nav class="mt-2" {{ Session::get('Quyen_id') == 0 ? '' : 'hidden'}}>
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+                     with font-awesome or any other icon font library -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-user-friends"></i>
+                        <p class="text-uppercase">
+                            Người dùng
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('chamdiemrenluyen.khoa.user.giaovien') }}"
+                               class="nav-link {{ Route::is('chamdiemrenluyen.khoa.user.giaovien') ? 'active' : '' }}">
+                                <i class="fas nav-icon"></i>
+                                <p>Giáo viên</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('chamdiemrenluyen.khoa.user.sinhvien') }}"
+                               class="nav-link {{ Route::is('chamdiemrenluyen.khoa.user.sinhvien') ? 'active' : '' }}">
+                                <i class="fas nav-icon"></i>
+                                <p>Sinh viên</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('chamdiemrenluyen.khoa.user.bqlkhoa') }}"
+                               class="nav-link {{ Route::is('chamdiemrenluyen.khoa.user.bqlkhoa') ? 'active' : '' }}">
+                                <i class="fas nav-icon"></i>
+                                <p>BCN Khoa</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('chamdiemrenluyen.khoa.user.admin') }}"
+                               class="nav-link {{ Route::is('chamdiemrenluyen.khoa.user.admin') ? 'active' : '' }}">
+                                <i class="fas nav-icon"></i>
+                                <p>Ban quản trị</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
         <!-- /.sidebar-menu -->
 
         <!-- Sidebar user panel (optional) -->
@@ -194,10 +265,9 @@
                                         if ($q == 3) {
                                             echo 'Sinh viên';
                                         } else {
-                                            if ($q == 1){
-                                                echo 'HĐK';
-                                            }
-                                            else{
+                                            if ($q == 1) {
+                                                echo 'BCN';
+                                            } else {
                                                 echo 'ADMIN';
                                             }
                                         }

@@ -42,6 +42,7 @@ Route::group(['middleware' => 'checklogin'], function () {
     Route::get('/admin/category/destroy/{id}', ['as' => 'admin.category.getDestroy', 'uses' => 'Admin\CateController@destroy']);
 
     Route::get('/profile', ['as' => 'chamdiemrenluyen.profile', 'uses' => 'Admin\StudentController@index']);
+    Route::get('/TKB', ['as' => 'chamdiemrenluyen.TKB', 'uses' => 'Admin\StudentController@crawlTKB']);
     Route::post('/profile/update{id}', ['as' => 'chamdiemrenluyen.profile.update', 'uses' => 'Admin\StudentController@updateProfile']);
     Route::post('/profile/changePassword{id}', ['as' => 'chamdiemrenluyen.profile.changePassword', 'uses' => 'Admin\StudentController@changePassword']);
     Route::get('/admin/brand/add', ['as' => 'admin.brand.add', 'uses' => 'Admin\BrandController@addBrand']);
@@ -84,15 +85,36 @@ Route::group(['middleware' => 'checklogin'], function () {
     Route::get('/viewScore', ['as' => 'chamdiemrenluyen.viewScore', 'uses' => 'Admin\GiaoVienController@viewScore']);
     Route::post('/viewScore', ['as' => 'chamdiemrenluyen.viewScore.hocki', 'uses' => 'Admin\GiaoVienController@viewScoreHocKi']);
     Route::get('/viewScore/duyet/{maSV}', ['as' => 'chamdiemrenluyen.viewScore.duyet', 'uses' => 'Admin\GiaoVienController@duyetDRL']);
+    Route::get('/viewScore/duyettatca', ['as' => 'chamdiemrenluyen.viewScore.duyettatca', 'uses' => 'Admin\GiaoVienController@duyetDRLtatca']);
+    Route::get('/viewScore/GVcham/{maSV}', ['as' => 'chamdiemrenluyen.viewScore.chamlai', 'uses' => 'Admin\GiaoVienController@viewGVcham']);
+    Route::post('/viewScore/GVcham/{maSV}', ['as' => 'chamdiemrenluyen.viewScore.chamlai.update', 'uses' => 'Admin\GiaoVienController@updateGVcham']);
     Route::get('/viewScore/khoaduyet/{maSV}', ['as' => 'chamdiemrenluyen.viewScore.khoaduyet', 'uses' => 'Admin\GiaoVienController@khoaduyetDRL']);
+    Route::get('/lecTKB', ['as' => 'chamdiemrenluyen.lecTKB', 'uses' => 'Admin\GiaoVienController@lec_crawlTKB']);
 
 
     //khoa
     Route::get('/qlsv', ['as' => 'chamdiemrenluyen.qlsv', 'uses' => 'Admin\KhoaController@qlsv']);
     Route::get('/qlsv/search', ['as' => 'chamdiemrenluyen.qlsv.search', 'uses' => 'Admin\KhoaController@searchStudent']);
+    Route::get('/lop', ['as' => 'chamdiemrenluyen.lop', 'uses' => 'Admin\KhoaController@lop']);
+    Route::get('/giaovien', ['as' => 'chamdiemrenluyen.giaovien', 'uses' => 'Admin\KhoaController@giaovien']);
+    Route::get('/giaovien/add', ['as' => 'chamdiemrenluyen.giaovien.add', 'uses' => 'Admin\KhoaController@addgiaovien']);
+    Route::post('/giaovien/add', ['as' => 'chamdiemrenluyen.giaovien.post', 'uses' => 'Admin\KhoaController@postgiaovien']);
+    Route::get('/giaovien/del/{id}', ['as' => 'chamdiemrenluyen.giaovien.del', 'uses' => 'Admin\KhoaController@del']);
+    Route::get('/giaovien/edit/{id}', ['as' => 'chamdiemrenluyen.giaovien.edit', 'uses' => 'Admin\KhoaController@edit']);
 
     //admin
     Route::get('/khoa', ['as' => 'chamdiemrenluyen.khoa', 'uses' => 'Admin\AdminController@index']);
+    Route::post('/khoa/add', ['as' => 'chamdiemrenluyen.khoa.add', 'uses' => 'Admin\AdminController@addKhoa']);
+    Route::get('/khoa/del/{id}', ['as' => 'chamdiemrenluyen.khoa.del', 'uses' => 'Admin\AdminController@del']);
+    Route::get('/user/sinhvien', ['as' => 'chamdiemrenluyen.khoa.user.sinhvien', 'uses' => 'Admin\AdminController@sinhvien']);
+    Route::get('/user/giaovien', ['as' => 'chamdiemrenluyen.khoa.user.giaovien', 'uses' => 'Admin\AdminController@giaovien']);
+    Route::get('/user/bqlkhoa', ['as' => 'chamdiemrenluyen.khoa.user.bqlkhoa', 'uses' => 'Admin\AdminController@bqlkhoa']);
+    Route::get('/user/bqlkhoa/add', ['as' => 'chamdiemrenluyen.khoa.user.bqlkhoa.add', 'uses' => 'Admin\AdminController@addbqlkhoa']);
+    Route::post('/user/bqlkhoa/add', ['as' => 'chamdiemrenluyen.khoa.user.bqlkhoa.post', 'uses' => 'Admin\AdminController@postbqlkhoa']);
+    Route::get('/user/admin', ['as' => 'chamdiemrenluyen.khoa.user.admin', 'uses' => 'Admin\AdminController@admin']);
+            //nhap file excel sv
+    Route::post('/user/sinhvien/nhapsv_excel', ['as' => 'chamdiemrenluyen.user.sinhvien.nhap_excel', 'uses' => 'Admin\AdminController@nhapsv_excel']);
+
 
 });
 

@@ -26,7 +26,7 @@
     <section class="content">
         <div class="row">
             <div class="col-md-7">
-                <form action="{{ route("chamdiemrenluyen.profile.update", $user-> maSV) }}" method="POST">
+                <form action="{{ route("chamdiemrenluyen.profile.update", $user-> maND) }}" method="POST">
                     @csrf
                     <div class="card card-primary">
                         <div>
@@ -39,26 +39,53 @@
                             <div class="card-body d-flex">
                                 <div class="col-md-6 form-group">
                                     <div class="form-group">
-                                        <label for="inputName">Mã sinh viên</label>
-                                        <input disabled value="{{ $user -> maND }}" name="HoTen" type="text"
-                                               id="inputName" class="form-control">
+                                        @if(isset($user -> maSV))
+
+                                            <label for="inputName">Mã sinh viên</label>
+                                            <input disabled value="{{ $user -> maND }}" name="HoTen" type="text"
+                                                   id="inputName" class="form-control">
+                                        @endif
+                                        @if(isset($user -> maGV))
+
+                                            <label for="inputName">Mã giáo viên</label>
+                                            <input disabled value="{{ $user -> maND }}" name="HoTen" type="text"
+                                                   id="inputName" class="form-control">
+                                        @endif
                                     </div>
                                     <div class="form-group">
                                         <label for="inputName">Họ và tên</label>
-                                        <input disabled value="{{ $user -> tenSV }}" name="HoTen" type="text"
-                                               id="inputName"
-                                               class="form-control">
+                                        @if(isset($user -> tenSV))
+                                            <input disabled
+                                                   value="{{$user -> tenSV}}
+                                                       " name="HoTen" type="text"
+                                                   id="inputName"
+                                                   class="form-control">
+                                        @endif
+                                        @if(isset($user -> ten))
+                                            <input disabled
+                                                   value="{{ $user -> ten }}
+                                                       " name="HoTen" type="text"
+                                                   id="inputName"
+                                                   class="form-control">
+                                        @endif
                                     </div>
                                     <div class="form-group">
                                         <label for="inputName">Email</label>
-                                        <input disabled value="{{ $user -> maND }}.@sv.ute.udn.vn" name="email"
+                                        <input disabled value="{{ $user -> maND }}@sv.ute.udn.vn" name="email"
                                                type="text"
                                                id="inputName" class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputName">Lớp</label>
-                                        <input disabled value="{{ $user -> lopID }}" name="username" type="text"
-                                               id="inputName" class="form-control">
+                                        @if(isset($user -> lopID))
+                                            <label for="inputName">Lớp</label>
+                                            <input disabled value="{{ $user -> lopID }}" name="username" type="text"
+                                                   id="inputName" class="form-control">
+                                        @endif
+                                        @if(isset($user -> khoaID))
+                                            <label for="inputName">Khoa</label>
+                                            <input disabled value="{{ $user ->tenKhoa }}" name="username" type="text"
+                                                   id="inputName" class="form-control">
+                                        @endif
                                     </div>
 
 
@@ -66,7 +93,6 @@
                                 <div class="col-md-6 form-group">
                                     <div class="form-group">
                                         <label for="inputName">Giới tính</label>
-
                                         <select class="form-control" name="gioitinh" id="inputName">
                                             @if($user -> gioitinh == 'Nam')
                                                 <option selected value="Nam">Nam</option>
@@ -79,14 +105,34 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputName">Quê quán</label>
-                                        <input value="{{ $user -> quequan }}" name="quequan" type="text" id="inputName"
-                                               class="form-control">
+                                        @if(isset($user -> quequan))
+
+                                            <label for="inputName">Quê quán</label>
+                                            <input value="{{ $user -> quequan }}" name="quequan" type="text"
+                                                   id="inputName"
+                                                   class="form-control">
+                                        @endif
+                                        @if(isset($user -> diachi))
+
+                                            <label for="inputName">Địa chỉ</label>
+                                            <input value="{{ $user -> diachi }}" name="quequan" type="text"
+                                                   id="inputName"
+                                                   class="form-control">
+                                        @endif
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputName">SĐT</label>
-                                        <input value="{{ $user -> sodienthoai }}" name="sdt" type="text"
-                                               id="inputName" class="form-control">
+                                        @if(isset($user -> sodienthoai))
+
+                                            <label for="inputName">SĐT</label>
+                                            <input value="{{ $user -> sodienthoai }}" name="sdt" type="text"
+                                                   id="inputName" class="form-control">
+                                        @endif
+                                        @if(isset($user -> sdt))
+
+                                            <label for="inputName">SĐT</label>
+                                            <input value="{{ $user -> sdt }}" name="sdt" type="text"
+                                                   id="inputName" class="form-control">
+                                        @endif
                                     </div>
                                     <div class="form-group">
                                         <label for="inputName">Năm sinh</label>
@@ -95,7 +141,8 @@
                                                class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-outline-primary float-right">Cập nhật</button>
+                                        <button type="submit" class="btn btn-outline-primary float-right">Cập nhật
+                                        </button>
                                     </div>
 
                                 </div>
@@ -111,7 +158,7 @@
             </div>
 
             <div class="col-md-5">
-                <form action="{{ route("chamdiemrenluyen.profile.changePassword", $user-> maSV) }}" method="POST">
+                <form action="{{ route("chamdiemrenluyen.profile.changePassword", $user-> maND) }}" method="POST">
                     @csrf
                     <div class="card card-primary">
                         <div>
@@ -146,15 +193,17 @@
                                                class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-outline-primary float-right">Đổi mật khẩu</button>
+                                        <button type="submit" class="btn btn-outline-primary float-right">Đổi mật khẩu
+                                        </button>
                                     </div>
+                                </div>
                             </div>
+                            <!-- /.card-body -->
                         </div>
-                        <!-- /.card-body -->
+                        <!-- /.card -->
                     </div>
-                    <!-- /.card -->
+                </form>
             </div>
         </div>
-
     </section>
 @endsection

@@ -1,4 +1,4 @@
-<?php $khoa = Session::get('tenKhoa') ?>
+<?php $khoa = Session::get('ten') ?>
 @extends('admin.layout', ['title' => $khoa])
 @section('content')
     <style>
@@ -11,12 +11,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="font-weight-bold text-uppercase">Khoa {{Session::get('tenKhoa')}}</h1>
+                    <h1 class="font-weight-bold text-uppercase">Khoa {{Session::get('ten')}}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Khoa {{Session::get('tenKhoa')}}</li>
+                        <li class="breadcrumb-item active">Khoa {{Session::get('ten')}}</li>
                     </ol>
                 </div>
             </div>

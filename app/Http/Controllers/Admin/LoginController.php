@@ -43,27 +43,28 @@ class LoginController extends Controller
                         ->where('giaovien.maND', $maND)
                         ->first();
                     Session::put('ten', $result->ten);
-                    Session::put('lopID', $result->lopID);
-                    Session::put('khoaID', $result->khoaID);
+
+                    //Session::put('lopID', $result->lopID);
+                   // Session::put('khoaID', $result->khoaID);
                     //dd($result->lopID);
                 } else {
                     if ($result->role == 1) {
                         $result = DB::table('nguoidung')
-                            ->join('giaovien', 'nguoidung.maND', '=', 'giaovien.maND')
-                            ->where('giaovien.maND', $maND)
+                            ->leftJoin('bcnkhoa', 'bcnkhoa.maBCN', '=', 'nguoidung.maND')
+                            ->leftjoin('khoa', 'bcnkhoa.maKhoa', '=', 'khoa.maKhoa')
+                            ->where('nguoidung.maND', $maND)
                             ->first();
-                        Session::put('ten', $result->ten);
-                        Session::put('khoaID', $result->khoaID);
-                        $tenKhoa = DB::table('khoa')
+                        Session::put('ten', $result->tenKhoa);
+                        Session::put('khoaID', $result->maKhoa);
+                        /*$tenKhoa = DB::table('khoa')
                             ->where('maKhoa', '=', $result->khoaID)
                             ->get('tenKhoa')->first()->tenKhoa;
-                        Session::put('tenKhoa', $tenKhoa);
+                        Session::put('tenKhoa', $tenKhoa);*/
                     } else {
                         $result = DB::table('nguoidung')
-                            ->join('giaovien', 'nguoidung.maND', '=', 'giaovien.maND')
-                            ->where('giaovien.maND', $maND)
+                            ->get()
                             ->first();
-                        Session::put('ten', $result->ten);
+                        //Session::put('ten', $result->ten);
                         //Session::put('khoaID', $result->khoaID);
 //                        $tenKhoa = DB::table('khoa')
 //                            ->where('maKhoa', '=', $result->khoaID)

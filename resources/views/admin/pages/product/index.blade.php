@@ -1,5 +1,4 @@
-<?php $lop = Session::get('lopID') ?>
-@extends('admin.layout', ['title' => $lop])
+@extends('admin.layout', ['title' => 'Sinh viên'])
 @section('content')
     <style>
         .concac {
@@ -11,12 +10,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="font-weight-bold text-uppercase">Danh sách sinh viên {{Session::get('lopID')}}</h1>
+                    <h1 class="font-weight-bold text-uppercase">Danh sách sinh viên {{$listStudent[0]->maLop}}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item">Home</li>
-                        <li class="breadcrumb-item active">Lớp {{Session::get('lopID')}}</li>
+                        <li class="breadcrumb-item active">Sinh viên</li>
                     </ol>
                 </div>
             </div>

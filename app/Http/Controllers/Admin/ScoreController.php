@@ -42,7 +42,7 @@ class ScoreController extends Controller
             ->first()->tgTTLBD;
 //        dd(date('Y-m-d', strtotime($tgTTL)));
         if (date('Y-m-d') >= date('Y-m-d', strtotime($tgTTL))) {
-            return redirect()->back()->with('overtime', 'Thời gian sinh viên chấm ĐRL đã kết thúc vào ngày: ' . $tgTTL);
+                return redirect()->back()->with('overtime', 'Thời gian sinh viên chấm ĐRL đã kết thúc vào ngày: ' . $tgTTL);
         }
         if (date('Y-m-d') < date('Y-m-d', strtotime($tgSV))) {
             return redirect()->back()->with('nottime', 'Chưa đến thời gian sinh viên chấm ĐRL. Thời gian bắt đầu: ' . $tgSV);
@@ -174,7 +174,6 @@ class ScoreController extends Controller
                             + $request->muc31 + $request->muc32 + $request->muc33 + $request->muc34
                             + $request->muc41 + $request->muc42 + $request->muc43 + $request->muc44 + $request->muc45
                             + $request->muc51 + $request->muc52 + $request->muc53 + $request->muc54,
-                        'hockiID' => 222
                     ]);
             }
         }

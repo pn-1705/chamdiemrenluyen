@@ -44,6 +44,97 @@ class KhoaController extends Controller
         $dt['id'] = $id;
         return view('admin.pages.khoa.index', $dt);
     }
+
+    public function lop(Request $request)
+    {
+        $khoaID = Session('khoaID');
+
+        $id = $request->student;
+        $listClass = DB::table('lop')
+            ->leftjoin('giaovien', 'gvcn', '=', 'maGV')
+            ->where('maKhoa', $khoaID)->get();
+        $listStudent = DB::table('sinhvien')
+            ->join('lop', 'sinhvien.lopID', '=', 'lop.maLop')
+            ->where('maSV', 'like', '%' . $id . '%')
+            ->orWhere('tenSV', 'like', '%' . $id . '%')
+            ->get();
+
+        $dt['listStudent'] = $listStudent;
+        $dt['listClass'] = $listClass;
+        $dt['id'] = $id;
+        return view('admin.pages.khoa.listclass', $dt);
+    }
+
+    public function giaovien(Request $request)
+    {
+        $khoaID = Session('khoaID');
+
+        $id = $request->student;
+        $listGV = DB::table('giaovien')
+            ->join('nguoidung', 'nguoidung.maND', '=', 'giaovien.maND')
+            ->where('khoaID', $khoaID)->get();
+
+        $dt['listGV'] = $listGV;
+        $dt['id'] = $id;
+        return view('admin.pages.khoa.teacher', $dt);
+    }
+
+    public function addgiaovien()
+    {
+        return view('admin.pages.khoa.addTeacher');
+    }
+
+    public function postgiaovien(Request $request)
+    {
+        $khoaID = Session('khoaID');
+//        dd($khoaID);
+        $check = DB::table('nguoidung')->where('maND', '=', $request->maGV)->first();
+
+        if ($request->maGV == null ||
+            $request->ten == null ||
+            $request->sdt == null ||
+            $request->email == null ||
+            $request->diachi == null ||
+            $request->hocham == null ||
+            $request->namsinh == null ||
+            $request->matkhau == null) {
+            return redirect()->back()->with('thieutruong', 'Vui lòng điền đủ thông tin !');
+        }
+        if ($check != null) {
+            return redirect()->back()->with('tontai', 'Đã tồn tại tài khoản !');
+        }
+        DB::table('nguoidung')->insert([
+            'maND' => $request->maGV,
+            'matkhau' => $request->matkhau,
+            'role' => 2
+        ]);
+
+        DB::table('giaovien')->insert([
+            'maGV' => $request->maGV,
+            'maND' => $request->maGV,
+            'ten' => $request->ten,
+            'sdt' => $request->sdt,
+            'email' => $request->email,
+            'diachi' => $request->diachi,
+            'hocham' => $request->hocham,
+            'namsinh' => $request->namsinh,
+            'khoaID' => $khoaID
+        ]);
+
+        $listGV = DB::table('giaovien')
+            ->join('nguoidung', 'nguoidung.maND', '=', 'giaovien.maND')
+            ->where('khoaID', $khoaID)->get();
+        $dt['listGV'] = $listGV;
+
+        return redirect()->route("chamdiemrenluyen.giaovien")->with('add', 'Đã thêm 1 tài khoản !');
+    }
+
+    public function del($id)
+    {
+        DB::table('nguoidung')->where('maND', '=', $id)->delete();
+        DB::table('giaovien')->where('maGV', '=', $id)->delete();
+        return redirect()->back()->with('del', 'Đã xóa 1 tài khoản !');
+    }
 //    public function addUser()
 //    {
 //        $list = Role::get();
