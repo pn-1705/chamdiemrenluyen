@@ -19,7 +19,7 @@
     <!-- Main content -->
     <section class="content">
         <form action="{{ route('chamdiemrenluyen.score.update', Session::get('maND')) }}" method="POST">
-        @csrf
+            @csrf
 
             <select class="form-control d-inline-block" name="hockiID">
                 @foreach($hocki as $key => $value )
@@ -31,7 +31,7 @@
                 @endforeach
             </select>
 
-        <!-- Default box -->
+            <!-- Default box -->
             <div class="card">
 
                 <div>
@@ -70,12 +70,12 @@
                                 </tr>
                                 </thead>
                                 <tbody id="detail_order">
-                                @if($diemTDG)
-                                    <tr>
-                                        <th></th>
-                                        <th>100</th>
-                                        <th>
 
+                                <tr>
+                                    <th></th>
+                                    <th>100</th>
+                                    @if(isset($diemTDG))
+                                        <th>
                                             @if(($diemTDG-> muc1 + $diemTDG-> muc2 + $diemTDG-> muc3 + $diemTDG-> muc4 + $diemTDG-> muc5)>=90)
                                                 <p>{{$diemTDG-> muc1 + $diemTDG-> muc2 + $diemTDG-> muc3 + $diemTDG-> muc4 + $diemTDG-> muc5}}</p>
                                                 <span class="badge badge-primary">Xuất sắc</span>
@@ -93,11 +93,30 @@
                                                 <span class="badge badge-primary">Yếu</span>
                                             @endif
                                         </th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                @endif
+                                    @endif
+                                    @if(isset($diemLDG))
+                                        <th>
+                                            @if(($diemLDG-> muc1 + $diemLDG-> muc2 + $diemLDG-> muc3 + $diemLDG-> muc4 + $diemLDG-> muc5)>=90)
+                                                <p>{{$diemLDG-> muc1 + $diemLDG-> muc2 + $diemLDG-> muc3 + $diemLDG-> muc4 + $diemLDG-> muc5}}</p>
+                                                <span class="badge badge-primary">Xuất sắc</span>
+                                            @elseif(($diemLDG-> muc1 + $diemLDG-> muc2 + $diemLDG-> muc3 + $diemLDG-> muc4 + $diemLDG-> muc5)>=80)
+                                                <p>{{$diemLDG-> muc1 + $diemLDG-> muc2 + $diemLDG-> muc3 + $diemLDG-> muc4 + $diemLDG-> muc5}}</p>
+                                                <span class="badge badge-primary">Giỏi</span>
+                                            @elseif(($diemLDG-> muc1 + $diemLDG-> muc2 + $diemLDG-> muc3 + $diemLDG-> muc4 + $diemLDG-> muc5)>=65)
+                                                <p>{{$diemLDG-> muc1 + $diemTDG-> muc2 + $diemTDG-> muc3 + $diemTDG-> muc4 + $diemTDG-> muc5}}</p>
+                                                <span class="badge badge-primary">Khá</span>
+                                            @elseif(($diemLDG-> muc1 + $diemLDG-> muc2 + $diemLDG-> muc3 + $diemLDG-> muc4 + $diemLDG-> muc5)>=50)
+                                                <p>{{$diemLDG-> muc1 + $diemLDG-> muc2 + $diemLDG-> muc3 + $diemLDG-> muc4 + $diemLDG-> muc5}}</p>
+                                                <span class="badge badge-primary">Trung bình</span>
+                                            @else
+                                                <p>{{$diemLDG-> muc1 + $diemLDG-> muc2 + $diemLDG-> muc3 + $diemLDG-> muc4 + $diemLDG-> muc5}}</p>
+                                                <span class="badge badge-primary">Yếu</span>
+                                            @endif
+                                        </th>
+                                    @endif
+                                    <th></th>
+                                    <th></th>
+                                </tr>
                                 <tr>
                                     <th>I. ĐÁNH GIÁ VỀ Ý THỨC THAM GIA HỌC TẬP.</th>
                                     <th>20</th>
@@ -107,7 +126,9 @@
                                                type="number">
                                     </th>
                                     <th>
-                                        <input disabled class="input-group-text w-50" type="number">
+                                        <input value="@if($diemLDG){{$diemLDG->muc1}}@endif" disabled
+                                               class="input-group-text w-50"
+                                               type="number">
                                     </th>
                                     <th>
                                         <input disabled class="input-group-text w-50" type="number">
@@ -123,13 +144,18 @@
                                     </th>
                                     <th>4</th>
                                     <th>
-                                        <input min="0" max="4" name="muc11" value="@if($diemTDG){{$diemTDG->muc11}}@endif"
+                                        <input min="0" max="4" name="muc11"
+                                               value="@if($diemTDG){{$diemTDG->muc11}}@endif"
                                                class="input-group-text w-50"
                                                type="number">
                                     </th>
                                     <th>
-                                        <input class="input-group-text w-50" type="number">
+                                        <input min="0" max="4" name="lmuc11"
+                                               value="@if($diemLDG){{$diemLDG->muc11}}@endif"
+                                               class="input-group-text w-50"
+                                               type="number">
                                     </th>
+
                                     <th>
                                         <input class="input-group-text w-50" type="number">
                                     </th>
@@ -149,7 +175,10 @@
                                                type="number">
                                     </th>
                                     <th>
-                                        <input class="input-group-text w-50" type="number">
+                                        <input min="0" max="2" name="lmuc12"
+                                               value="@if($diemLDG){{$diemLDG->muc12}}@endif"
+                                               class="input-group-text w-50"
+                                               type="number">
                                     </th>
                                     <th>
                                         <input class="input-group-text w-50" type="number">
@@ -164,12 +193,16 @@
                                     </th>
                                     <th>2</th>
                                     <th>
-                                        <input min="0" max="2" name="muc13" value="@if($diemTDG){{$diemTDG->muc13}}@endif"
+                                        <input min="0" max="2" name="muc13"
+                                               value="@if($diemTDG){{$diemTDG->muc13}}@endif"
                                                class="input-group-text w-50"
                                                type="number">
                                     </th>
                                     <th>
-                                        <input class="input-group-text w-50" type="number">
+                                        <input min="0" max="2" name="lmuc13"
+                                               value="@if($diemLDG){{$diemLDG->muc13}}@endif"
+                                               class="input-group-text w-50"
+                                               type="number">
                                     </th>
                                     <th>
                                         <input class="input-group-text w-50" type="number">
@@ -182,12 +215,16 @@
                                     <th>- Không vi phạm quy chế thi và kiểm tra.</th>
                                     <th>6</th>
                                     <th>
-                                        <input min="0" max="6" name="muc14" value="@if($diemTDG){{$diemTDG->muc14}}@endif"
+                                        <input min="0" max="6" name="muc14"
+                                               value="@if($diemTDG){{$diemTDG->muc14}}@endif"
                                                class="input-group-text w-50"
                                                type="number">
                                     </th>
                                     <th>
-                                        <input class="input-group-text w-50" type="number">
+                                        <input min="0" max="6" name="lmuc14"
+                                               value="@if($diemLDG){{$diemLDG->muc14}}@endif"
+                                               class="input-group-text w-50"
+                                               type="number">
                                     </th>
                                     <th>
                                         <input class="input-group-text w-50" type="number">
@@ -202,12 +239,16 @@
                                     </th>
                                     <th>2</th>
                                     <th>
-                                        <input min="0" max="2" name="muc15" value="@if($diemTDG){{$diemTDG->muc15}}@endif"
+                                        <input min="0" max="2" name="muc15"
+                                               value="@if($diemTDG){{$diemTDG->muc15}}@endif"
                                                class="input-group-text w-50"
                                                type="number">
                                     </th>
                                     <th>
-                                        <input class="input-group-text w-50" type="number">
+                                        <input min="0" max="2" name="lmuc15"
+                                               value="@if($diemLDG){{$diemLDG->muc15}}@endif"
+                                               class="input-group-text w-50"
+                                               type="number">
                                     </th>
                                     <th>
                                         <input class="input-group-text w-50" type="number">
@@ -223,12 +264,16 @@
                                     </th>
                                     <th>4</th>
                                     <th>
-                                        <input min="0" max="4" pattern="{0,2,4}" name="muc16" value="@if($diemTDG){{$diemTDG->muc16}}@endif"
+                                        <input min="0" max="4" pattern="{0,2,4}" name="muc16"
+                                               value="@if($diemTDG){{$diemTDG->muc16}}@endif"
                                                class="input-group-text w-50"
                                                type="number">
                                     </th>
                                     <th>
-                                        <input class="input-group-text w-50" type="number">
+                                        <input min="0" max="4" pattern="{0,2,4}" name="lmuc16"
+                                               value="@if($diemLDG){{$diemLDG->muc16}}@endif"
+                                               class="input-group-text w-50"
+                                               type="number">
                                     </th>
                                     <th>
                                         <input class="input-group-text w-50" type="number">
@@ -247,7 +292,9 @@
                                                type="number">
                                     </th>
                                     <th>
-                                        <input disabled class="input-group-text w-50" type="number">
+                                        <input value="@if($diemLDG){{$diemLDG->muc2}}@endif" disabled
+                                               class="input-group-text w-50"
+                                               type="number">
                                     </th>
                                     <th>
                                         <input disabled class="input-group-text w-50" type="number">
@@ -262,12 +309,16 @@
                                     </th>
                                     <th>6</th>
                                     <th>
-                                        <input min="0" max="6" name="muc21" value="@if($diemTDG){{$diemTDG->muc21}}@endif"
+                                        <input min="0" max="6" name="muc21"
+                                               value="@if($diemTDG){{$diemTDG->muc21}}@endif"
                                                class="input-group-text w-50"
                                                type="number">
                                     </th>
                                     <th>
-                                        <input class="input-group-text w-50" type="number">
+                                        <input min="0" max="6" name="lmuc21"
+                                               value="@if($diemLDG){{$diemLDG->muc21}}@endif"
+                                               class="input-group-text w-50"
+                                               type="number">
                                     </th>
                                     <th>
                                         <input class="input-group-text w-50" type="number">
@@ -281,12 +332,16 @@
                                     </th>
                                     <th>4</th>
                                     <th>
-                                        <input min="0" max="4" name="muc22" value="@if($diemTDG){{$diemTDG->muc22}}@endif"
+                                        <input min="0" max="4" name="muc22"
+                                               value="@if($diemTDG){{$diemTDG->muc22}}@endif"
                                                class="input-group-text w-50"
                                                type="number">
                                     </th>
                                     <th>
-                                        <input class="input-group-text w-50" type="number">
+                                        <input min="0" max="4" name="lmuc22"
+                                               value="@if($diemLDG){{$diemLDG->muc22}}@endif"
+                                               class="input-group-text w-50"
+                                               type="number">
                                     </th>
                                     <th>
                                         <input class="input-group-text w-50" type="number">
@@ -299,12 +354,16 @@
                                     <th>- Có ý thức chấp hành nội quy, quy chế và các quy định của nhà trường.</th>
                                     <th>10</th>
                                     <th>
-                                        <input min="0" max="10" name="muc23" value="@if($diemTDG){{$diemTDG->muc23}}@endif"
+                                        <input min="0" max="10" name="muc23"
+                                               value="@if($diemTDG){{$diemTDG->muc23}}@endif"
                                                class="input-group-text w-50"
                                                type="number">
                                     </th>
                                     <th>
-                                        <input class="input-group-text w-50" type="number">
+                                        <input min="0" max="10" name="lmuc23"
+                                               value="@if($diemLDG){{$diemLDG->muc23}}@endif"
+                                               class="input-group-text w-50"
+                                               type="number">
                                     </th>
                                     <th>
                                         <input class="input-group-text w-50" type="number">
@@ -317,12 +376,16 @@
                                     <th>- Đóng học phí và các khoản thu khác đầy đủ, đúng hạn.</th>
                                     <th>5</th>
                                     <th>
-                                        <input min="0" max="5" name="muc24" value="@if($diemTDG){{$diemTDG->muc24}}@endif"
+                                        <input min="0" max="5" name="muc24"
+                                               value="@if($diemTDG){{$diemTDG->muc24}}@endif"
                                                class="input-group-text w-50"
                                                type="number">
                                     </th>
                                     <th>
-                                        <input class="input-group-text w-50" type="number">
+                                        <input min="0" max="5" name="lmuc24"
+                                               value="@if($diemLDG){{$diemLDG->muc24}}@endif"
+                                               class="input-group-text w-50"
+                                               type="number">
                                     </th>
                                     <th>
                                         <input class="input-group-text w-50" type="number">
@@ -342,7 +405,9 @@
                                                type="number">
                                     </th>
                                     <th>
-                                        <input disabled class="input-group-text w-50" type="number">
+                                        <input value="@if($diemLDG){{$diemLDG->muc3}}@endif" disabled
+                                               class="input-group-text w-50"
+                                               type="number">
                                     </th>
                                     <th>
                                         <input disabled class="input-group-text w-50" type="number">
@@ -357,12 +422,16 @@
                                     </th>
                                     <th>10</th>
                                     <th>
-                                        <input min="0" max="10" name="muc31" value="@if($diemTDG){{$diemTDG->muc31}}@endif"
+                                        <input min="0" max="10" name="muc31"
+                                               value="@if($diemTDG){{$diemTDG->muc31}}@endif"
                                                class="input-group-text w-50"
                                                type="number">
                                     </th>
                                     <th>
-                                        <input class="input-group-text w-50" type="number">
+                                        <input min="0" max="10" name="lmuc31"
+                                               value="@if($diemLDG){{$diemLDG->muc31}}@endif"
+                                               class="input-group-text w-50"
+                                               type="number">
                                     </th>
                                     <th>
                                         <input class="input-group-text w-50" type="number">
@@ -378,12 +447,16 @@
                                     </th>
                                     <th>6</th>
                                     <th>
-                                        <input min="0" max="6" name="muc32" value="@if($diemTDG){{$diemTDG->muc32}}@endif"
+                                        <input min="0" max="6" name="muc32"
+                                               value="@if($diemTDG){{$diemTDG->muc32}}@endif"
                                                class="input-group-text w-50"
                                                type="number">
                                     </th>
                                     <th>
-                                        <input class="input-group-text w-50" type="number">
+                                        <input min="0" max="6" name="lmuc32"
+                                               value="@if($diemLDG){{$diemLDG->muc32}}@endif"
+                                               class="input-group-text w-50"
+                                               type="number">
                                     </th>
                                     <th>
                                         <input class="input-group-text w-50" type="number">
@@ -398,12 +471,16 @@
                                     </th>
                                     <th>2</th>
                                     <th>
-                                        <input min="0" max="2" name="muc33" value="@if($diemTDG){{$diemTDG->muc33}}@endif"
+                                        <input min="0" max="2" name="muc33"
+                                               value="@if($diemTDG){{$diemTDG->muc33}}@endif"
                                                class="input-group-text w-50"
                                                type="number">
                                     </th>
                                     <th>
-                                        <input class="input-group-text w-50" type="number">
+                                        <input min="0" max="2" name="lmuc33"
+                                               value="@if($diemLDG){{$diemLDG->muc33}}@endif"
+                                               class="input-group-text w-50"
+                                               type="number">
                                     </th>
                                     <th>
                                         <input class="input-group-text w-50" type="number">
@@ -416,12 +493,16 @@
                                     <th>- Có ý thức tuyên truyền, phòng chống tội phạm và các tệ nạn xã hội.</th>
                                     <th>2</th>
                                     <th>
-                                        <input min="0" max="2" name="muc34" value="@if($diemTDG){{$diemTDG->muc34}}@endif"
+                                        <input min="0" max="2" name="muc34"
+                                               value="@if($diemTDG){{$diemTDG->muc34}}@endif"
                                                class="input-group-text w-50"
                                                type="number">
                                     </th>
                                     <th>
-                                        <input class="input-group-text w-50" type="number">
+                                        <input min="0" max="2" name="lmuc34"
+                                               value="@if($diemLDG){{$diemLDG->muc34}}@endif"
+                                               class="input-group-text w-50"
+                                               type="number">
                                     </th>
                                     <th>
                                         <input class="input-group-text w-50" type="number">
@@ -439,7 +520,9 @@
                                                type="number">
                                     </th>
                                     <th>
-                                        <input class="input-group-text w-50" type="number">
+                                        <input disabled value="@if($diemLDG){{$diemLDG->muc4}}@endif"
+                                               class="input-group-text w-50"
+                                               type="number">
                                     </th>
                                     <th>
                                         <input class="input-group-text w-50" type="number">
@@ -454,12 +537,16 @@
                                     </th>
                                     <th>4</th>
                                     <th>
-                                        <input min="0" max="4" name="muc41" value="@if($diemTDG){{$diemTDG->muc41}}@endif"
+                                        <input min="0" max="4" name="muc41"
+                                               value="@if($diemTDG){{$diemTDG->muc41}}@endif"
                                                class="input-group-text w-50"
                                                type="number">
                                     </th>
                                     <th>
-                                        <input class="input-group-text w-50" type="number">
+                                        <input min="0" max="4" name="lmuc41"
+                                               value="@if($diemLDG){{$diemLDG->muc41}}@endif"
+                                               class="input-group-text w-50"
+                                               type="number">
                                     </th>
                                     <th>
                                         <input class="input-group-text w-50" type="number">
@@ -472,12 +559,16 @@
                                     <th>- Có tham gia bảo hiểm y tế ( bắt buộc) theo Luật bảo hiểm y tế.</th>
                                     <th>10</th>
                                     <th>
-                                        <input min="0" max="10" name="muc42" value="@if($diemTDG){{$diemTDG->muc42}}@endif"
+                                        <input min="0" max="10" name="muc42"
+                                               value="@if($diemTDG){{$diemTDG->muc42}}@endif"
                                                class="input-group-text w-50"
                                                type="number">
                                     </th>
                                     <th>
-                                        <input class="input-group-text w-50" type="number">
+                                        <input min="0" max="10" name="lmuc42"
+                                               value="@if($diemLDG){{$diemLDG->muc42}}@endif"
+                                               class="input-group-text w-50"
+                                               type="number">
                                     </th>
                                     <th>
                                         <input class="input-group-text w-50" type="number">
@@ -492,12 +583,16 @@
                                     </th>
                                     <th>5</th>
                                     <th>
-                                        <input min="0" max="5" name="muc43" value="@if($diemTDG){{$diemTDG->muc43}}@endif"
+                                        <input min="0" max="5" name="muc43"
+                                               value="@if($diemTDG){{$diemTDG->muc43}}@endif"
                                                class="input-group-text w-50"
                                                type="number">
                                     </th>
                                     <th>
-                                        <input class="input-group-text w-50" type="number">
+                                        <input min="0" max="5" name="lmuc43"
+                                               value="@if($diemLDG){{$diemLDG->muc43}}@endif"
+                                               class="input-group-text w-50"
+                                               type="number">
                                     </th>
                                     <th>
                                         <input class="input-group-text w-50" type="number">
@@ -512,12 +607,16 @@
                                     </th>
                                     <th>4</th>
                                     <th>
-                                        <input min="0" max="4" name="muc44" value="@if($diemTDG){{$diemTDG->muc44}}@endif"
+                                        <input min="0" max="4" name="muc44"
+                                               value="@if($diemTDG){{$diemTDG->muc44}}@endif"
                                                class="input-group-text w-50"
                                                type="number">
                                     </th>
                                     <th>
-                                        <input class="input-group-text w-50" type="number">
+                                        <input min="0" max="4" name="lmuc44"
+                                               value="@if($diemLDG){{$diemLDG->muc44}}@endif"
+                                               class="input-group-text w-50"
+                                               type="number">
                                     </th>
                                     <th>
                                         <input class="input-group-text w-50" type="number">
@@ -530,12 +629,16 @@
                                     <th>- Có tinh thần chia sẻ, giúp đỡ người gặp khó khăn, hoạn nạn.</th>
                                     <th>2</th>
                                     <th>
-                                        <input min="0" max="2" name="muc45" value="@if($diemTDG){{$diemTDG->muc45}}@endif"
+                                        <input min="0" max="2" name="muc45"
+                                               value="@if($diemTDG){{$diemTDG->muc45}}@endif"
                                                class="input-group-text w-50"
                                                type="number">
                                     </th>
                                     <th>
-                                        <input class="input-group-text w-50" type="number">
+                                        <input min="0" max="2" name="lmuc45"
+                                               value="@if($diemLDG){{$diemLDG->muc45}}@endif"
+                                               class="input-group-text w-50"
+                                               type="number">
                                     </th>
                                     <th>
                                         <input class="input-group-text w-50" type="number">
@@ -557,7 +660,9 @@
                                                type="number">
                                     </th>
                                     <th>
-                                        <input disabled class="input-group-text w-50" type="number">
+                                        <input value="@if($diemLDG){{$diemLDG->muc5}}@endif" disabled
+                                               class="input-group-text w-50"
+                                               type="number">
                                     </th>
                                     <th>
                                         <input disabled class="input-group-text w-50" type="number">
@@ -572,12 +677,16 @@
                                     </th>
                                     <th>3</th>
                                     <th>
-                                        <input min="0" max="3" name="muc51" value="@if($diemTDG){{$diemTDG->muc51}}@endif"
+                                        <input min="0" max="3" name="muc51"
+                                               value="@if($diemTDG){{$diemTDG->muc51}}@endif"
                                                class="input-group-text w-50"
                                                type="number">
                                     </th>
                                     <th>
-                                        <input class="input-group-text w-50" type="number">
+                                        <input min="0" max="3" name="lmuc51"
+                                               value="@if($diemLDG){{$diemLDG->muc51}}@endif"
+                                               class="input-group-text w-50"
+                                               type="number">
                                     </th>
                                     <th>
                                         <input class="input-group-text w-50" type="number">
@@ -592,12 +701,16 @@
                                     </th>
                                     <th>2</th>
                                     <th>
-                                        <input min="0" max="2" name="muc52" value="@if($diemTDG){{$diemTDG->muc52}}@endif"
+                                        <input min="0" max="2" name="muc52"
+                                               value="@if($diemTDG){{$diemTDG->muc52}}@endif"
                                                class="input-group-text w-50"
                                                type="number">
                                     </th>
                                     <th>
-                                        <input class="input-group-text w-50" type="number">
+                                        <input min="0" max="2" name="lmuc52"
+                                               value="@if($diemLDG){{$diemLDG->muc52}}@endif"
+                                               class="input-group-text w-50"
+                                               type="number">
                                     </th>
                                     <th>
                                         <input class="input-group-text w-50" type="number">
@@ -612,12 +725,16 @@
                                     </th>
                                     <th>3</th>
                                     <th>
-                                        <input min="0" max="3" name="muc53" value="@if($diemTDG){{$diemTDG->muc53}}@endif"
+                                        <input min="0" max="3" name="muc53"
+                                               value="@if($diemTDG){{$diemTDG->muc53}}@endif"
                                                class="input-group-text w-50"
                                                type="number">
                                     </th>
                                     <th>
-                                        <input class="input-group-text w-50" type="number">
+                                        <input min="0" max="3" name="lmuc53"
+                                               value="@if($diemLDG){{$diemLDG->muc53}}@endif"
+                                               class="input-group-text w-50"
+                                               type="number">
                                     </th>
                                     <th>
                                         <input class="input-group-text w-50" type="number">
@@ -632,12 +749,16 @@
                                     </th>
                                     <th>2</th>
                                     <th>
-                                        <input min="0" max="2" name="muc54" value="@if($diemTDG){{$diemTDG->muc54}}@endif"
+                                        <input min="0" max="2" name="muc54"
+                                               value="@if($diemTDG){{$diemTDG->muc54}}@endif"
                                                class="input-group-text w-50"
                                                type="number">
                                     </th>
                                     <th>
-                                        <input class="input-group-text w-50" type="number">
+                                        <input min="0" max="2" name="lmuc54"
+                                               value="@if($diemLDG){{$diemLDG->muc54}}@endif"
+                                               class="input-group-text w-50"
+                                               type="number">
                                     </th>
                                     <th>
                                         <input class="input-group-text w-50" type="number">
@@ -655,7 +776,9 @@
                                             disabled class="input-group-text w-50" type="number">
                                     </th>
                                     <th>
-                                        <input disabled class="input-group-text w-50" type="number">
+                                        <input
+                                            value="@if($diemLDG){{$diemLDG-> muc1 + $diemLDG-> muc2 + $diemLDG-> muc3 + $diemLDG-> muc4 + $diemLDG-> muc5}}@endif"
+                                            disabled class="input-group-text w-50" type="number">
                                     </th>
                                     <th>
                                         <input disabled class="input-group-text w-50" type="number">
@@ -672,9 +795,7 @@
                                         <button type="submit" class="btn-outline-primary btn btn-group">Cập nhật
                                         </button>
                                     </th>
-                                    <th>
-                                        {{--                                        <button class="btn-danger btn btn-group">Thắc mắc</button>--}}
-                                    </th>
+                                    <th>                                    </th>
                                     <th>
                                         {{--                                        <button class="btn-danger btn btn-group">Thắc mắc</button>--}}
                                     </th>

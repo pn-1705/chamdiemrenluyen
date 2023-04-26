@@ -51,13 +51,19 @@
                 <table class="table table-striped projects">
                     <thead>
                     <tr>
-                        <th colspan="2">
+                        <th colspan="3">
                             <div>
                                 <form action="{{route('chamdiemrenluyen.qlsv.search')}}" class="form-inline"
                                       method="GET">
                                     @csrf
                                     <input value="@if(isset($id)){{$id}} @endif" class="form-control" name="student" type="text"
                                            placeholder="Nhập sinh viên cần tìm...">
+                                    <select class="form-control" name="lopID" id="">
+                                        <option value="">Lớp</option>
+                                        @foreach($listClass as $key => $value)
+                                            <option @if(isset($lopID)){{$lopID == $value->maLop ? 'selected' : '' }} @endif value="{{$value->maLop}}">{{$value->maLop}}</option>
+                                        @endforeach
+                                    </select>
                                     <button class="form-control btn-outline-dark btn" type="submit"><i
                                             class="fa fa-search"></i>
                                     </button>
@@ -65,14 +71,6 @@
                             </div>
                         </th>
                         <th></th>
-                        <th>
-                            <select class="form-control" name="lopid" id="">
-                                <option value="">Lớp</option>
-                                @foreach($listClass as $key => $value)
-                                    <option value="{{$value->maLop}}">{{$value->maLop}}</option>
-                                @endforeach
-                            </select>
-                        </th>
                         <th></th>
                         <th></th>
                         <th></th>

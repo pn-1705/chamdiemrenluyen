@@ -32,16 +32,25 @@ class KhoaController extends Controller
         $khoaID = Session('khoaID');
 
         $id = $request->student;
+        $maLop = $request -> lopID;
+
         $listClass = DB::table('lop')->where('maKhoa', $khoaID)->get();
-        $listStudent = DB::table('sinhvien')
+        $listStudent1 = DB::table('sinhvien')
             ->join('lop', 'sinhvien.lopID', '=', 'lop.maLop')
             ->where('maSV', 'like', '%' . $id . '%')
             ->orWhere('tenSV', 'like', '%' . $id . '%')
             ->get();
+        if ($maLop != null){
+            $listStudent = $listStudent1->where('maLop', '=', $maLop);
+        } else{
+            $listStudent = $listStudent1;
+        }
+        //dd($listStudent);
 
         $dt['listStudent'] = $listStudent;
         $dt['listClass'] = $listClass;
         $dt['id'] = $id;
+        $dt['lopID'] = $maLop;
         return view('admin.pages.khoa.index', $dt);
     }
 

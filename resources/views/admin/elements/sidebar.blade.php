@@ -170,7 +170,7 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" {{ Session::get('Quyen_id') == 2 || Session::get('Quyen_id') == 3 ? '' : 'hidden' }}>
                     <a href="{{ route('chamdiemrenluyen.profile') }}"
                        class="nav-link {{ Route::is('chamdiemrenluyen.profile') ? 'active' : '' }}">
                         <i class="nav-icon far fa-id-card"></i>
@@ -183,11 +183,19 @@
                     </a>
                 </li>
                 <li class="nav-item " {{ Session::get('Quyen_id') == 0 ? '' : 'hidden' }}>
+                    <a href="{{ route('chamdiemrenluyen.thongbao') }}"
+                       class="nav-link {{ Route::is('chamdiemrenluyen.thongbao') ? 'active' : '' }}">
+                        <i class="nav-icon far fa-bell"></i>
+                        <p class="text-uppercase">
+                            Quản lí thông báo
+                        </p>
+                    </a>
+                </li><li class="nav-item " {{ Session::get('Quyen_id') == 0 ? '' : 'hidden' }}>
                     <a href="{{ route('chamdiemrenluyen.khoa') }}"
                        class="nav-link {{ Route::is('chamdiemrenluyen.khoa') ? 'active' : '' }}">
                         <i class="nav-icon far fa-star"></i>
                         <p class="text-uppercase">
-                            Khoa
+                            Quản lí khoa
                         </p>
                     </a>
                 </li>
@@ -200,9 +208,9 @@
                      with font-awesome or any other icon font library -->
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-user-friends"></i>
+                        <i class="nav-icon fas fa-user-ninja"></i>
                         <p class="text-uppercase">
-                            Người dùng
+                            Quản lí người dùng
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
@@ -260,7 +268,12 @@
 
                                     $q = Session::get('Quyen_id');
                                     if ($q == 2) {
-                                        echo 'GVCN';
+                                        $lopCN = Session::get('lopCN');
+                                        if (isset($lopCN)){
+                                            echo 'GVCN '. $lopCN;
+                                        }else{
+                                            echo 'GVCN';
+                                        }
                                     } else {
                                         if ($q == 3) {
                                             echo 'Sinh viên';

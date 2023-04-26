@@ -114,6 +114,11 @@ Route::group(['middleware' => 'checklogin'], function () {
     Route::get('/user/admin', ['as' => 'chamdiemrenluyen.khoa.user.admin', 'uses' => 'Admin\AdminController@admin']);
             //nhap file excel sv
     Route::post('/user/sinhvien/nhapsv_excel', ['as' => 'chamdiemrenluyen.user.sinhvien.nhap_excel', 'uses' => 'Admin\AdminController@nhapsv_excel']);
+            // chức năng thông báo
+    Route::get('/quanlithongbao', ['as' => 'chamdiemrenluyen.thongbao', 'uses' => 'Admin\AdminController@thongbao']);
+    Route::post('/quanlithongbao/update/{id}', ['as' => 'chamdiemrenluyen.thongbao.update', 'uses' => 'Admin\AdminController@updateTB']);
+    Route::get('/quanlithongbao/del/{id}', ['as' => 'chamdiemrenluyen.thongbao.del', 'uses' => 'Admin\AdminController@delTB']);
+    Route::post('/quanlithongbao.create', ['as' => 'chamdiemrenluyen.thongbao.create', 'uses' => 'Admin\AdminController@createTB']);
 
 
 });

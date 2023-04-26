@@ -55,7 +55,6 @@
 
                     <!-- Default box -->
                     <div class="card">
-
                         <div class="card-body p-0">
                             <table class="table table-striped projects">
                                 <thead>
@@ -125,7 +124,8 @@
                                         <input value="@if($diemTDG){{$diemTDG->muc1}}@endif" disabled
                                                class="input-group-text w-50"
                                                type="number">
-                                    </th><th>
+                                    </th>
+                                    <th>
                                         <input value="@if($diemLDG){{$diemLDG->muc1}}@endif" disabled
                                                class="input-group-text w-50"
                                                type="number">

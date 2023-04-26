@@ -35,6 +35,7 @@ class LoginController extends Controller
                     ->first();
                 Session::put('ten', $result->tenSV);
 
+
                 //dd($result);
             } else {
                 if ($result->role == 2) {
@@ -43,9 +44,12 @@ class LoginController extends Controller
                         ->where('giaovien.maND', $maND)
                         ->first();
                     Session::put('ten', $result->ten);
-
+                    $lopCN = DB::table('giaovien')
+                        ->join('lop', 'maGV', '=', 'gvcn')
+                        ->where('maGV', '=', $maND)->first()->maLop;
+                    Session::put('lopCN', $lopCN);
                     //Session::put('lopID', $result->lopID);
-                   // Session::put('khoaID', $result->khoaID);
+                    // Session::put('khoaID', $result->khoaID);
                     //dd($result->lopID);
                 } else {
                     if ($result->role == 1) {

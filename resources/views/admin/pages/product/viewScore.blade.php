@@ -2,7 +2,7 @@
 if ($role == 1) {
     $tt = 'Khoa ' . Session::get('tenKhoa');
 } else {
-    $tt = 'Lớp ' . Session::get('lopID');
+    $tt = 'Lớp ' . Session::get('lopCN');
 }
 
 ?>

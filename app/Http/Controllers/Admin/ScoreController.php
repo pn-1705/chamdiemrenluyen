@@ -17,10 +17,13 @@ class ScoreController extends Controller
         $hocki = DB::table('hocki')->orderBy('tgKT', 'desc')->get();
         $maSV = Session('maND');
         $diemTDG = DB::table('diemsvtudanhgia')->where('maSV', '=', $maSV)->first();
+        $diemLDG = DB::table('diemlopdanhgia')->where('maSV', '=', $maSV)->first();
         //dd($diemTDG);
 //        $ndDGDRL = DB::table('noidungdanhgiadrl')->get();
         $data['hocki'] = $hocki;
         $data['diemTDG'] = $diemTDG;
+        $data['diemLDG'] = $diemLDG;
+       // $data['diemKDG'] = $diemKDG;
         return view('admin.pages.category.index', $data);
     }
 
