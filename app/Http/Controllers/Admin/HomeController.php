@@ -19,8 +19,15 @@ class HomeController extends Controller
 //        $data['noibat'] = $noibat;
         $ngNhan = Session::get('Quyen_id');
 
-        $listAlert = DB::table('thongbao')->where('nguoinhan', '=', $ngNhan)->get();
-//        dd($listAlert);
+        if($ngNhan == 0){
+            $listAlert = DB::table('thongbao')->get();
+        }else{
+            $listAlert = DB::table('thongbao')
+                ->where('nguoinhan', '=', $ngNhan)
+                ->orWhere('nguoinhan', '=', 0)
+                ->get();
+        }
+        //        dd($listAlert);
 
         return view('admin.pages.dashboard', ['listAlert' => $listAlert]);
     }

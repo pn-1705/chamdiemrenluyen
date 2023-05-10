@@ -90,6 +90,7 @@ Route::group(['middleware' => 'checklogin'], function () {
     Route::post('/viewScore/GVcham/{maSV}', ['as' => 'chamdiemrenluyen.viewScore.chamlai.update', 'uses' => 'Admin\GiaoVienController@updateGVcham']);
     Route::get('/viewScore/khoaduyet/{maSV}', ['as' => 'chamdiemrenluyen.viewScore.khoaduyet', 'uses' => 'Admin\GiaoVienController@khoaduyetDRL']);
     Route::get('/lecTKB', ['as' => 'chamdiemrenluyen.lecTKB', 'uses' => 'Admin\GiaoVienController@lec_crawlTKB']);
+    Route::get('/export-students', ['as' => 'chamdiemrenluyen.export-students', 'uses' => 'Admin\GiaoVienController@export_students']);
 
 
     //khoa
@@ -104,8 +105,17 @@ Route::group(['middleware' => 'checklogin'], function () {
 
     //admin
     Route::get('/khoa', ['as' => 'chamdiemrenluyen.khoa', 'uses' => 'Admin\AdminController@index']);
+    Route::get('/hocki', ['as' => 'chamdiemrenluyen.hocki', 'uses' => 'Admin\AdminController@hocki']);
+    Route::post('/hocki/update/{id}', ['as' => 'chamdiemrenluyen.hocki.update', 'uses' => 'Admin\AdminController@updateHK']);
+    Route::get('/hocki/del/{id}', ['as' => 'chamdiemrenluyen.hocki.del', 'uses' => 'Admin\AdminController@delHK']);
+    Route::post('/hocki/add', ['as' => 'chamdiemrenluyen.hocki.add', 'uses' => 'Admin\AdminController@addHocKi']);
+
+
+    Route::get('/scoreManager', ['as' => 'chamdiemrenluyen.scoreManager', 'uses' => 'Admin\AdminController@viewScore']);
+    Route::get('/scoreManager/search', ['as' => 'chamdiemrenluyen.scoreManager.search', 'uses' => 'Admin\AdminController@searchScore']);
     Route::post('/khoa/add', ['as' => 'chamdiemrenluyen.khoa.add', 'uses' => 'Admin\AdminController@addKhoa']);
     Route::get('/khoa/del/{id}', ['as' => 'chamdiemrenluyen.khoa.del', 'uses' => 'Admin\AdminController@del']);
+    Route::get('/khoa/{id}', ['as' => 'chamdiemrenluyen.khoa.class', 'uses' => 'Admin\AdminController@viewClass']);
     Route::get('/user/sinhvien', ['as' => 'chamdiemrenluyen.khoa.user.sinhvien', 'uses' => 'Admin\AdminController@sinhvien']);
     Route::get('/user/giaovien', ['as' => 'chamdiemrenluyen.khoa.user.giaovien', 'uses' => 'Admin\AdminController@giaovien']);
     Route::get('/user/bqlkhoa', ['as' => 'chamdiemrenluyen.khoa.user.bqlkhoa', 'uses' => 'Admin\AdminController@bqlkhoa']);
@@ -119,6 +129,11 @@ Route::group(['middleware' => 'checklogin'], function () {
     Route::post('/quanlithongbao/update/{id}', ['as' => 'chamdiemrenluyen.thongbao.update', 'uses' => 'Admin\AdminController@updateTB']);
     Route::get('/quanlithongbao/del/{id}', ['as' => 'chamdiemrenluyen.thongbao.del', 'uses' => 'Admin\AdminController@delTB']);
     Route::post('/quanlithongbao.create', ['as' => 'chamdiemrenluyen.thongbao.create', 'uses' => 'Admin\AdminController@createTB']);
+
+    //công nhận ĐRL
+    Route::get('/scoreManager/congnhan/{maSV}', ['as' => 'chamdiemrenluyen.scoreManager.congnhan', 'uses' => 'Admin\AdminController@congnhanDRL']);
+    Route::get('/scoreManager/congnhantatca', ['as' => 'chamdiemrenluyen.scoreManager.congnhantatca', 'uses' => 'Admin\AdminController@congnhanDRLtatca']);
+
 
 
 });

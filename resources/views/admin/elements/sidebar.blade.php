@@ -89,8 +89,18 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item " {{ Session::get('Quyen_id') == 0 ? '' : 'hidden' }}>
+                    <a href="{{ route('chamdiemrenluyen.hocki') }}"
+                       class="nav-link {{ Route::is('chamdiemrenluyen.hocki') ? 'active' : '' }}">
+                        <i class="nav-icon fa fa-list"></i>
+                        <p class="text-uppercase">
+                            danh sách học kì
+                        </p>
+                    </a>
+                </li>
                 <li class="nav-item" {{ Session::get('Quyen_id') == 3 ? '' : 'hidden' }}>
-                    <a href="{{route('chamdiemrenluyen.TKB')}}" class="nav-link {{ Route::is('chamdiemrenluyen.TKB') ? 'active' : '' }}">
+                    <a href="{{route('chamdiemrenluyen.TKB')}}"
+                       class="nav-link {{ Route::is('chamdiemrenluyen.TKB') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-calendar-times"></i>
                         <p class="text-uppercase">
                             Thời khóa biểu
@@ -170,6 +180,18 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item" {{ Session::get('Quyen_id') == 0 ? '' : 'hidden' }}>
+                    <a href="{{ route('chamdiemrenluyen.scoreManager') }}"
+                       class="nav-link {{ Route::is('chamdiemrenluyen.scoreManager') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-star"></i>
+                        <p class="text-uppercase">
+                            {{--                            <span class="badge badge-info right">--}}
+                            {{--                                    {{DB::table('danhmuc')->count()}}--}}
+                            {{--                                </span>--}}
+                            Quản lí ĐIỂM
+                        </p>
+                    </a>
+                </li>
                 <li class="nav-item" {{ Session::get('Quyen_id') == 2 || Session::get('Quyen_id') == 3 ? '' : 'hidden' }}>
                     <a href="{{ route('chamdiemrenluyen.profile') }}"
                        class="nav-link {{ Route::is('chamdiemrenluyen.profile') ? 'active' : '' }}">
@@ -190,15 +212,17 @@
                             Quản lí thông báo
                         </p>
                     </a>
-                </li><li class="nav-item " {{ Session::get('Quyen_id') == 0 ? '' : 'hidden' }}>
+                </li>
+                <li class="nav-item " {{ Session::get('Quyen_id') == 0 ? '' : 'hidden' }}>
                     <a href="{{ route('chamdiemrenluyen.khoa') }}"
-                       class="nav-link {{ Route::is('chamdiemrenluyen.khoa') ? 'active' : '' }}">
+                       class="nav-link {{ Route::is('chamdiemrenluyen.khoa') || Route::is('chamdiemrenluyen.khoa.class') ? 'active' : '' }}">
                         <i class="nav-icon far fa-star"></i>
                         <p class="text-uppercase">
-                            Quản lí khoa
+                            Quản lí khoa - lớp
                         </p>
                     </a>
                 </li>
+
             </ul>
         </nav>
         <nav class="mt-2" {{ Session::get('Quyen_id') == 0 ? '' : 'hidden'}}>
@@ -269,9 +293,9 @@
                                     $q = Session::get('Quyen_id');
                                     if ($q == 2) {
                                         $lopCN = Session::get('lopCN');
-                                        if (isset($lopCN)){
-                                            echo 'GVCN '. $lopCN;
-                                        }else{
+                                        if (isset($lopCN)) {
+                                            echo 'GVCN ' . $lopCN;
+                                        } else {
                                             echo 'GVCN';
                                         }
                                     } else {

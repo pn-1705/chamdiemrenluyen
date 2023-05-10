@@ -25,7 +25,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="d-inline-block d-flex">
-            <div>
+            <div class="">
                 <form class="form-inline" id="form_input">
                     <input class="form-control" name="product" type="text" placeholder="Nhập sinh viên cần tìm...">
                     <button class="btn-outline-dark btn" type="submit"><i class="fa fa-search"></i></button>
@@ -89,7 +89,10 @@
                         {{--                                <option value="Hiện">Hiện</option>--}}
                         {{--                            </select>--}}
                         {{--                        </th>--}}
-                        <th>
+                        <th class="">
+                            <a class="btn btn-success float-right"
+                               href="{{ route("chamdiemrenluyen.export-students" ) }}"> Xuất
+                                DSSV</a>
                         </th>
                     </tr>
                     </thead>
@@ -116,7 +119,7 @@
                             {{--                                    </li>--}}
                             {{--                                </ul>--}}
                             {{--                            </td>--}}
-                            <td><?php echo  $i++;
+                            <td><?php echo $i++;
                                 ?></td>
                             <td>{{ $value -> maSV }}</td>
                             <td>{{ $value -> tenSV }}</td>
@@ -129,17 +132,18 @@
                             <td>{{ $value ->quequan }}</td>
                             <td>{{ $value ->sodienthoai }}</td>
                             <td>{{ $value ->gioitinh }}</td>
-{{--                            <td class="project-state">--}}
-{{--                                @if($value -> TrangThai == 1)--}}
-{{--                                    <a href="{{ route("admin.product.active",  $value -> id ) }}"><span--}}
-{{--                                            class="badge badge-primary">Hiện</span></a>--}}
-{{--                                @else--}}
-{{--                                    <a href="{{ route("admin.product.active",  $value -> id ) }}"><span--}}
-{{--                                            class="badge badge-secondary">Ẩn</span></a>--}}
-{{--                                @endif--}}
-{{--                            </td>--}}
+                            {{--                            <td class="project-state">--}}
+                            {{--                                @if($value -> TrangThai == 1)--}}
+                            {{--                                    <a href="{{ route("admin.product.active",  $value -> id ) }}"><span--}}
+                            {{--                                            class="badge badge-primary">Hiện</span></a>--}}
+                            {{--                                @else--}}
+                            {{--                                    <a href="{{ route("admin.product.active",  $value -> id ) }}"><span--}}
+                            {{--                                            class="badge badge-secondary">Ẩn</span></a>--}}
+                            {{--                                @endif--}}
+                            {{--                            </td>--}}
                             <td class="project-actions text-right">
-                                <a class="btn btn-info btn-sm" href="{{ route("admin.product.edit",  $value -> maSV ) }}">
+                                <a class="btn btn-info btn-sm"
+                                   href="{{ route("admin.product.edit",  $value -> maSV ) }}">
                                     <i class="fas fa-pencil-alt">
                                     </i>
                                     Edit

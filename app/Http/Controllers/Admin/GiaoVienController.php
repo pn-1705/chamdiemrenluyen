@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
 use Goutte\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Maatwebsite\Excel\Excel;
+use PHPUnit\Util\Type;
 use function redirect;
 use function view;
 
@@ -348,7 +351,7 @@ class GiaoVienController extends Controller
             $columns = $node->filter('td')->each(function ($column) {
                 return $column->text();
             });
-            if (count($columns) == 8){
+            if (count($columns) == 8) {
                 return $columns;
             }
             // Trả về mảng chứa thông tin của thời khóa biểu
@@ -359,5 +362,56 @@ class GiaoVienController extends Controller
 
         // Trả về dữ liệu thời khóa biểu đã đọc từ file Excel
         return view('admin.pages.product.TKB', ['tkbData' => $content]);
+    }
+
+    public function export_students()
+    {
+        $gvcn = Session('maND');
+        $students = DB::table('sinhvien')
+            ->leftJoin('lop', 'lopID', '=', 'maLop')
+            ->where('gvcn', '=', $gvcn)
+            ->orderBy('sinhvien.maSV')
+            ->get();
+        // Lấy danh sách sinh viên từ model
+        //dd($students);
+
+        // Tạo đối tượng Writer
+        $writer = WriterEntityFactory::createXLSXWriter();
+
+        // $writer = WriterEntityFactory::createWriter(Type::XLSX);
+
+        // Mở file để ghi dữ liệu
+        $lopCN = Session::get('lopCN');
+
+        $filePath = public_path('/DSSV_'.$lopCN.'.xlsx');
+        $writer->openToFile($filePath);
+
+        // Ghi tiêu đề cột
+        $header = ['STT', 'Mã SV', 'Họ và tên', 'Lớp', 'Năm sinh', 'Quê quán', 'SĐT', 'Giới tính', 'Mật khẩu'];
+        $headerRow = WriterEntityFactory::createRowFromArray($header);
+        $writer->addRow($headerRow);
+
+        // Ghi dữ liệu sinh viên
+        $stt = 1;
+        foreach ($students as $student) {
+            $dataRow = WriterEntityFactory::createRowFromArray(
+                [
+                    $stt++,
+                    $student->maSV,
+                    $student->tenSV,
+                    $student->lopID,
+                    $student->namsinh,
+                    $student->quequan,
+                    $student->sodienthoai,
+                    $student->gioitinh,
+                    $student->matkhau]);
+            $writer->addRow($dataRow);
+        }
+
+        // Đóng đối tượng Writer
+        $writer->close();
+
+        // Trả về file đính kèm
+        return response()->download($filePath)->deleteFileAfterSend(true);
     }
 }
