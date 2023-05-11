@@ -35,6 +35,7 @@ Route::group(['middleware' => 'checklogin'], function () {
 
     Route::get('/score', ['as' => 'chamdiemrenluyen.score', 'uses' => 'Admin\ScoreController@index']);
     Route::post('/score/update/{maND}', ['as' => 'chamdiemrenluyen.score.update', 'uses' => 'Admin\ScoreController@updateScore']);
+    Route::get('/score/hocki', ['as' => 'chamdiemrenluyen.score.viewScoreHocKi', 'uses' => 'Admin\ScoreController@viewScoreHocKi']);
     Route::get('/admin/category/add', ['as' => 'admin.category.add', 'uses' => 'Admin\CateController@addCate']);
     Route::post('/admin/category/add', ['as' => 'admin.category.save', 'uses' => 'Admin\CateController@addCatePost']);
     Route::get('/admin/category/edit/{id}', ['as' => 'admin.category.edit', 'uses' => 'Admin\CateController@edit']);

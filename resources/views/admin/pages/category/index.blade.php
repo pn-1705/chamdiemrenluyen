@@ -4,7 +4,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>THÔNG TIN ĐIỂM RÈN LUYỆN</h1>
+                    <h1>THỜI GIAN CHẤM ĐIỂM RÈN LUYỆN HỌC KÌ {{Session::get('hkDangMo')}}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -18,19 +18,23 @@
 
     <!-- Main content -->
     <section class="content">
+        <form action="{{ route('chamdiemrenluyen.score.viewScoreHocKi') }}" method="get">
+            @csrf
+            <div class="d-flex">
+                <select class="form-control d-inline-block" name="hockiID">
+                    @foreach($hocki as $key => $value )
+                        @if(Session::get('hk') != $value -> id)
+                            <option value="{{ $value -> id }}">Học kì {{ $value -> id }}</option>
+                        @else
+                            <option selected value="{{ $value -> id }}">Học kì {{ $value -> id }}</option>
+                        @endif
+                    @endforeach
+                </select>
+                <button class="btn btn-success" type="submit">Xem</button>
+            </div>
+        </form>
         <form action="{{ route('chamdiemrenluyen.score.update', Session::get('maND')) }}" method="POST">
             @csrf
-
-            <select class="form-control d-inline-block" name="hockiID">
-                @foreach($hocki as $key => $value )
-                    @if(Session::get('hk') != $value -> id)
-                        <option value="{{ $value -> id }}">Học kì {{ $value -> id }}</option>
-                    @else
-                        <option value="{{ $value -> id }}">Học kì {{ $value -> id }}</option>
-                    @endif
-                @endforeach
-            </select>
-
             <!-- Default box -->
             <div class="card">
 
@@ -81,41 +85,79 @@
                                                 <span class="badge badge-primary">Xuất sắc</span>
                                             @elseif(($diemTDG-> muc1 + $diemTDG-> muc2 + $diemTDG-> muc3 + $diemTDG-> muc4 + $diemTDG-> muc5)>=80)
                                                 <p>{{$diemTDG-> muc1 + $diemTDG-> muc2 + $diemTDG-> muc3 + $diemTDG-> muc4 + $diemTDG-> muc5}}</p>
-                                                <span class="badge badge-primary">Giỏi</span>
+                                                <span class="badge badge-info">Giỏi</span>
                                             @elseif(($diemTDG-> muc1 + $diemTDG-> muc2 + $diemTDG-> muc3 + $diemTDG-> muc4 + $diemTDG-> muc5)>=65)
                                                 <p>{{$diemTDG-> muc1 + $diemTDG-> muc2 + $diemTDG-> muc3 + $diemTDG-> muc4 + $diemTDG-> muc5}}</p>
-                                                <span class="badge badge-primary">Khá</span>
+                                                <span class="badge badge-secondary">Khá</span>
                                             @elseif(($diemTDG-> muc1 + $diemTDG-> muc2 + $diemTDG-> muc3 + $diemTDG-> muc4 + $diemTDG-> muc5)>=50)
                                                 <p>{{$diemTDG-> muc1 + $diemTDG-> muc2 + $diemTDG-> muc3 + $diemTDG-> muc4 + $diemTDG-> muc5}}</p>
-                                                <span class="badge badge-primary">Trung bình</span>
+                                                <span class="badge badge-warning">Trung bình</span>
                                             @else
                                                 <p>{{$diemTDG-> muc1 + $diemTDG-> muc2 + $diemTDG-> muc3 + $diemTDG-> muc4 + $diemTDG-> muc5}}</p>
-                                                <span class="badge badge-primary">Yếu</span>
+                                                <span class="badge badge-danger">Yếu</span>
                                             @endif
                                         </th>
                                     @endif
-                                    @if(isset($diemLDG))
-                                        <th>
-                                            @if(($diemLDG-> muc1 + $diemLDG-> muc2 + $diemLDG-> muc3 + $diemLDG-> muc4 + $diemLDG-> muc5)>=90)
-                                                <p>{{$diemLDG-> muc1 + $diemLDG-> muc2 + $diemLDG-> muc3 + $diemLDG-> muc4 + $diemLDG-> muc5}}</p>
+                                    <th>
+                                        @if(isset($bangdiem))
+                                            @if($bangdiem-> diemLDG >=90)
+                                                <p>{{$bangdiem-> diemLDG}}</p>
                                                 <span class="badge badge-primary">Xuất sắc</span>
-                                            @elseif(($diemLDG-> muc1 + $diemLDG-> muc2 + $diemLDG-> muc3 + $diemLDG-> muc4 + $diemLDG-> muc5)>=80)
-                                                <p>{{$diemLDG-> muc1 + $diemLDG-> muc2 + $diemLDG-> muc3 + $diemLDG-> muc4 + $diemLDG-> muc5}}</p>
-                                                <span class="badge badge-primary">Giỏi</span>
-                                            @elseif(($diemLDG-> muc1 + $diemLDG-> muc2 + $diemLDG-> muc3 + $diemLDG-> muc4 + $diemLDG-> muc5)>=65)
-                                                <p>{{$diemLDG-> muc1 + $diemTDG-> muc2 + $diemTDG-> muc3 + $diemTDG-> muc4 + $diemTDG-> muc5}}</p>
-                                                <span class="badge badge-primary">Khá</span>
-                                            @elseif(($diemLDG-> muc1 + $diemLDG-> muc2 + $diemLDG-> muc3 + $diemLDG-> muc4 + $diemLDG-> muc5)>=50)
-                                                <p>{{$diemLDG-> muc1 + $diemLDG-> muc2 + $diemLDG-> muc3 + $diemLDG-> muc4 + $diemLDG-> muc5}}</p>
-                                                <span class="badge badge-primary">Trung bình</span>
+                                            @elseif($bangdiem-> diemLDG>=80)
+                                                <p>{{$bangdiem-> diemLDG}}</p>
+                                                <span class="badge badge-info">Giỏi</span>
+                                            @elseif($bangdiem-> diemLDG>=65)
+                                                <p>{{$bangdiem-> diemLDG}}</p>
+                                                <span class="badge badge-secondary">Khá</span>
+                                            @elseif($bangdiem-> diemLDG>=50)
+                                                <p>{{$bangdiem-> diemLDG}}</p>
+                                                <span class="badge badge-warning">Trung bình</span>
                                             @else
-                                                <p>{{$diemLDG-> muc1 + $diemLDG-> muc2 + $diemLDG-> muc3 + $diemLDG-> muc4 + $diemLDG-> muc5}}</p>
-                                                <span class="badge badge-primary">Yếu</span>
+                                                <p>{{$bangdiem-> diemLDG}}</p>
+                                                <span class="badge badge-danger">Yếu</span>
                                             @endif
-                                        </th>
-                                    @endif
-                                    <th></th>
-                                    <th></th>
+                                        @endif
+                                    </th>
+                                    <th>
+                                        @if(isset($bangdiem))
+                                            @if($bangdiem-> diemKDG >=90)
+                                                <p>{{$bangdiem-> diemKDG}}</p>
+                                                <span class="badge badge-primary">Xuất sắc</span>
+                                            @elseif($bangdiem-> diemKDG>=80)
+                                                <p>{{$bangdiem-> diemKDG}}</p>
+                                                <span class="badge badge-info">Giỏi</span>
+                                            @elseif($bangdiem-> diemKDG>=65)
+                                                <p>{{$bangdiem-> diemKDG}}</p>
+                                                <span class="badge badge-secondary">Khá</span>
+                                            @elseif($bangdiem-> diemKDG>=50)
+                                                <p>{{$bangdiem-> diemKDG}}</p>
+                                                <span class="badge badge-warning">Trung bình</span>
+                                            @else
+                                                <p>{{$bangdiem-> diemKDG}}</p>
+                                                <span class="badge badge-danger">Yếu</span>
+                                            @endif
+                                        @endif
+                                    </th>
+                                    <th>
+                                        @if(isset($bangdiem))
+                                            @if($bangdiem-> diemCC >=90)
+                                                <p>{{$bangdiem-> diemCC}}</p>
+                                                <span class="badge badge-primary">Xuất sắc</span>
+                                            @elseif($bangdiem-> diemCC>=80)
+                                                <p>{{$bangdiem-> diemCC}}</p>
+                                                <span class="badge badge-info">Giỏi</span>
+                                            @elseif($bangdiem-> diemCC>=65)
+                                                <p>{{$bangdiem-> diemCC}}</p>
+                                                <span class="badge badge-secondary">Khá</span>
+                                            @elseif($bangdiem-> diemCC>=50)
+                                                <p>{{$bangdiem-> diemCC}}</p>
+                                                <span class="badge badge-warning">Trung bình</span>
+                                            @else
+                                                <p>{{$bangdiem-> diemCC}}</p>
+                                                <span class="badge badge-danger">Yếu</span>
+                                            @endif
+                                        @endif
+                                    </th>
                                 </tr>
                                 <tr>
                                     <th>I. ĐÁNH GIÁ VỀ Ý THỨC THAM GIA HỌC TẬP.</th>
@@ -795,7 +837,7 @@
                                         <button type="submit" class="btn-outline-primary btn btn-group">Cập nhật
                                         </button>
                                     </th>
-                                    <th>                                    </th>
+                                    <th></th>
                                     <th>
                                         {{--                                        <button class="btn-danger btn btn-group">Thắc mắc</button>--}}
                                     </th>

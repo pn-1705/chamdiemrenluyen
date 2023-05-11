@@ -136,18 +136,4 @@ class StudentController extends Controller
         // Trả về dữ liệu thời khóa biểu đã đọc từ file Excel
         return view('admin.pages.brand.TKB', ['tkbData' => $content]);
     }
-
-//
-//    public function destroy($id)
-//    {
-//        $br = Brand::find($id);
-//        $br->delete();
-//        return redirect()->route("admin.brand.index")->with('del', 'Data deleted thành công');
-//    }
-//
-//    public function index_cate()
-//    {
-//        $cate = DB::table('danhmuc')->get();
-//        return view('admin.pages.category.index', ['list_cate' => $cate]);
-//    }
 }

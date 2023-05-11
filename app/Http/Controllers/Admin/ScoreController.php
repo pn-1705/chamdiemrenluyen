@@ -14,16 +14,55 @@ class ScoreController extends Controller
 {
     public function index()
     {
+        $hkDangMoCham = DB::table('hocki')->where('trangthai', '=', 1)->first();
+        //dd($hkDangMoCham);
+        if ($hkDangMoCham){
+            $hockiID = $hkDangMoCham -> id;
+        }
+        Session::put('hkDangMo', $hockiID);
+
         $hocki = DB::table('hocki')->orderBy('tgKT', 'desc')->get();
         $maSV = Session('maND');
         $diemTDG = DB::table('diemsvtudanhgia')->where('maSV', '=', $maSV)->first();
         $diemLDG = DB::table('diemlopdanhgia')->where('maSV', '=', $maSV)->first();
+        $bangdiem = DB::table('bangdiem')->where('maSV', '=', $maSV)->first();
         //dd($diemTDG);
 //        $ndDGDRL = DB::table('noidungdanhgiadrl')->get();
         $data['hocki'] = $hocki;
         $data['diemTDG'] = $diemTDG;
         $data['diemLDG'] = $diemLDG;
+        $data['bangdiem'] = $bangdiem;
+
        // $data['diemKDG'] = $diemKDG;
+        return view('admin.pages.category.index', $data);
+    }
+
+    public function viewScoreHocKi(Request $request)
+    {
+        //dd($request->hockiID);
+        $hocki = DB::table('hocki')->orderBy('tgKT', 'desc')->get();
+        $maSV = Session('maND');
+        Session::put('hk', $request->hockiID);
+        $diemTDG = DB::table('diemsvtudanhgia')
+            ->where('maSV', '=', $maSV)
+            ->where('hockiID', '=', $request->hockiID)
+            ->first();
+        $diemLDG = DB::table('diemlopdanhgia')
+            ->where('maSV', '=', $maSV)
+            ->where('hockiID', '=', $request->hockiID)
+            ->first();
+        $bangdiem = DB::table('bangdiem')
+            ->where('maSV', '=', $maSV)
+            ->where('hockiID', '=', $request->hockiID)
+            ->first();
+        //dd($diemTDG);
+//        $ndDGDRL = DB::table('noidungdanhgiadrl')->get();
+        $data['hocki'] = $hocki;
+        $data['diemTDG'] = $diemTDG;
+        $data['diemLDG'] = $diemLDG;
+        $data['bangdiem'] = $bangdiem;
+
+        // $data['diemKDG'] = $diemKDG;
         return view('admin.pages.category.index', $data);
     }
 
@@ -35,13 +74,17 @@ class ScoreController extends Controller
         $data['hocki'] = $list_hocki;
         $data['diemTDG'] = $diemTDG;
 
-
+        $hkDangMoCham = DB::table('hocki')->where('trangthai', '=', 1)->first();
+        //dd($hkDangMoCham);
+        if ($hkDangMoCham){
+            $hockiID = $hkDangMoCham -> id;
+        }
         $tgSV = DB::table('hocki')
-            ->where('id', '=', $request->hockiID)
+            ->where('id', '=', $hockiID)
             ->first()->tgSVBD;
 
         $tgTTL = DB::table('hocki')
-            ->where('id', '=', $request->hockiID)
+            ->where('id', '=', $hockiID)
             ->first()->tgTTLBD;
 //        dd(date('Y-m-d', strtotime($tgTTL)));
         if (date('Y-m-d') >= date('Y-m-d', strtotime($tgTTL))) {
@@ -57,7 +100,7 @@ class ScoreController extends Controller
         if ($check) {
             DB::table('diemsvtudanhgia')
                 ->where('maSV', '=', $id)
-                ->where('hockiID', '=', $request->hockiID)
+                ->where('hockiID', '=', $hockiID)
                 ->update([
                     'muc1' => $request->muc11 + $request->muc12 + $request->muc13 + $request->muc14 + $request->muc15 + $request->muc16,
                     'muc2' => $request->muc21 + $request->muc22 + $request->muc23 + $request->muc24,
@@ -96,7 +139,7 @@ class ScoreController extends Controller
             if ($checkBangDiem) {
                 DB::table('bangdiem')
                     ->where('maSV', '=', $id)
-                    ->where('hockiID', '=', $request->hockiID)
+                    ->where('hockiID', '=', $hockiID)
                     ->update([
                         'diemTDG' => $request->muc11 + $request->muc12 + $request->muc13 + $request->muc14 + $request->muc15 + $request->muc16
                             + $request->muc21 + $request->muc22 + $request->muc23 + $request->muc24
@@ -108,7 +151,7 @@ class ScoreController extends Controller
                 DB::table('bangdiem')
                     ->insert([
                         'maSV' => $id,
-                        'hockiID' => $request->hockiID,
+                        'hockiID' => $hockiID,
                         'diemTDG' => $request->muc11 + $request->muc12 + $request->muc13 + $request->muc14 + $request->muc15 + $request->muc16
                             + $request->muc21 + $request->muc22 + $request->muc23 + $request->muc24
                             + $request->muc31 + $request->muc32 + $request->muc33 + $request->muc34
@@ -121,7 +164,7 @@ class ScoreController extends Controller
             DB::table('diemsvtudanhgia')
                 ->insert([
                     'maSV' => $id,
-                    'hockiID' => $request->hockiID,
+                    'hockiID' => $hockiID,
                     'muc1' => $request->muc11 + $request->muc12 + $request->muc13 + $request->muc14 + $request->muc15 + $request->muc16,
                     'muc2' => $request->muc21 + $request->muc22 + $request->muc23 + $request->muc24,
                     'muc3' => $request->muc31 + $request->muc32 + $request->muc33 + $request->muc34,
@@ -159,7 +202,7 @@ class ScoreController extends Controller
             if ($checkBangDiem) {
                 DB::table('bangdiem')
                     ->where('maSV', '=', $id)
-                    ->where('hockiID', '=', $request->hockiID)
+                    ->where('hockiID', '=', $hockiID)
                     ->update([
                         'diemTDG' => $request->muc11 + $request->muc12 + $request->muc13 + $request->muc14 + $request->muc15 + $request->muc16
                             + $request->muc21 + $request->muc22 + $request->muc23 + $request->muc24
@@ -171,7 +214,7 @@ class ScoreController extends Controller
                 DB::table('bangdiem')
                     ->insert([
                         'maSV' => $id,
-                        'hockiID' => $request->hockiID,
+                        'hockiID' => $hockiID,
                         'diemTDG' => $request->muc11 + $request->muc12 + $request->muc13 + $request->muc14 + $request->muc15 + $request->muc16
                             + $request->muc21 + $request->muc22 + $request->muc23 + $request->muc24
                             + $request->muc31 + $request->muc32 + $request->muc33 + $request->muc34
@@ -183,40 +226,4 @@ class ScoreController extends Controller
         $tenSV = DB::table('sinhvien')->where('maSV', '=', $id)->first()->tenSV;
         return redirect()->route('chamdiemrenluyen.score', $data)->with('updated', 'Điểm rèn luyện sinh viên '.$tenSV. ' đã cập nhật.');
     }
-//
-//    public function addCate()
-//    {
-//        return view('admin.pages.category.add');
-//    }
-//
-//    public function addCatePost(Request $request)
-//    {
-//        $data = $request->all();
-//        $new = new Category();
-//        $new->TenDM = $request->TenDM;
-//        $new->save();
-//        return redirect()->route("admin.category.index")->with('add', 'Data inserted thành công');
-//    }
-//
-//    public function edit($id)
-//    {
-//        $cate = Category::find($id);
-//        $data['cate'] = $cate;
-//        return view('admin.pages.category.edit', $data);
-//    }
-//
-//    public function update($id, Request $request)
-//    {
-//        $new = Category::find($id);
-//        $new->TenDM = $request->TenDM;
-//        $new->save();
-//        return redirect()->route("admin.category.index")->with('updated', 'Data updted thành công');
-//    }
-//
-//    public function destroy($id)
-//    {
-//        $cate = Category::find($id);
-//        $cate->delete();
-//        return redirect()->route("admin.category.index")->with('del', 'Data deleted thành công');
-//    }
 }
