@@ -170,6 +170,7 @@ class GiaoVienController extends Controller
 
     public function viewGVcham($maSV, Request $request)
     {
+        //dd($request->all());
         $infoSV = DB::table('sinhvien')->where('maSV', '=', $maSV)->first();
         $hocki = DB::table('hocki')->orderBy('tgKT', 'desc')->get();
         $diemTDG = DB::table('diemsvtudanhgia')->where('maSV', '=', $maSV)->first();

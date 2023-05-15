@@ -15,7 +15,6 @@
             </div>
         </div><!-- /.container-fluid -->
     </section>
-
     <!-- Main content -->
     <section class="content">
         <form action="{{ route('chamdiemrenluyen.score.viewScoreHocKi') }}" method="get">
@@ -34,8 +33,8 @@
             </div>
         </form>
         <form action="{{ route('chamdiemrenluyen.score.update', Session::get('maND')) }}" method="POST">
-            @csrf
-            <!-- Default box -->
+        @csrf
+        <!-- Default box -->
             <div class="card">
 
                 <div>

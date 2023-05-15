@@ -113,7 +113,7 @@
                                             @endif
                                         </th>
                                     @endif
-                                    s
+
                                     <th></th>
                                     <th></th>
                                 </tr>

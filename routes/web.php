@@ -87,8 +87,8 @@ Route::group(['middleware' => 'checklogin'], function () {
     Route::post('/viewScore', ['as' => 'chamdiemrenluyen.viewScore.hocki', 'uses' => 'Admin\GiaoVienController@viewScoreHocKi']);
     Route::get('/viewScore/duyet/{maSV}', ['as' => 'chamdiemrenluyen.viewScore.duyet', 'uses' => 'Admin\GiaoVienController@duyetDRL']);
     Route::get('/viewScore/duyettatca', ['as' => 'chamdiemrenluyen.viewScore.duyettatca', 'uses' => 'Admin\GiaoVienController@duyetDRLtatca']);
-    Route::get('/viewScore/GVcham/{maSV}', ['as' => 'chamdiemrenluyen.viewScore.chamlai', 'uses' => 'Admin\GiaoVienController@viewGVcham']);
-    Route::post('/viewScore/GVcham/{maSV}', ['as' => 'chamdiemrenluyen.viewScore.chamlai.update', 'uses' => 'Admin\GiaoVienController@updateGVcham']);
+    Route::get('/viewScore/{maSV}', ['as' => 'chamdiemrenluyen.viewScore.chamlai', 'uses' => 'Admin\GiaoVienController@viewGVcham']);
+    Route::post('/viewScore/{maSV}', ['as' => 'chamdiemrenluyen.viewScore.chamlai.update', 'uses' => 'Admin\GiaoVienController@updateGVcham']);
     Route::get('/viewScore/khoaduyet/{maSV}', ['as' => 'chamdiemrenluyen.viewScore.khoaduyet', 'uses' => 'Admin\GiaoVienController@khoaduyetDRL']);
     Route::get('/lecTKB', ['as' => 'chamdiemrenluyen.lecTKB', 'uses' => 'Admin\GiaoVienController@lec_crawlTKB']);
     Route::get('/export-students', ['as' => 'chamdiemrenluyen.export-students', 'uses' => 'Admin\GiaoVienController@export_students']);

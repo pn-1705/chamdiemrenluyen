@@ -188,12 +188,12 @@
                                     bg-dark
                                     @endif">{{ $value ->diemKDG }}</td>
                                 <td {{$role == 1 ? 'hidden' : ''}}><a
-                                        class="btn btn-info btn-sm {{ ($value -> diemTDG) == null ? 'disabled' : '' }}"
-                                        href="{{ route("chamdiemrenluyen.scoreManager.congnhan", $value -> maND,$value -> diemTDG) }}">
+                                        class="btn btn-info btn-sm {{ ($value -> diemKDG) == null ? 'disabled' : '' }}"
+                                        href="{{ route("chamdiemrenluyen.scoreManager.congnhan", $value -> maND,$value -> diemKDG) }}">
                                         Công nhận
                                     </a><a
-                                        class="btn btn-warning btn-sm {{ ($value -> diemTDG) == null ? 'disabled' : '' }}"
-                                        href="{{ route("chamdiemrenluyen.viewScore.chamlai", $value -> maND,$value -> diemTDG) }}">
+                                        class="btn btn-warning btn-sm {{ ($value -> diemKDG) == null ? 'disabled' : '' }}"
+                                        href="{{ route("chamdiemrenluyen.viewScore.chamlai", $value -> maND,$value -> diemKDG) }}">
                                         Chấm lại
                                     </a></td>
                                 <td class="text-right @if($value -> diemCC >=90)
